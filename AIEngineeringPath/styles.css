@@ -11,13 +11,13 @@ div.outer-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 98vh;
+    height: 100%;
 }
 
 div.inner-container {
     border: 2px solid #a0a0a0;
     width: 800px;
-    margin: 0 auto;
+    margin: 20px auto;
     padding: 20px;
 }
 
