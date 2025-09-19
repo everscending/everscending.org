@@ -4,21 +4,18 @@ body {
     color: #ebebeb;
     text-align: center;
     height: 100%;
-    overflow: auto;
+    overflow: hidden;
 }
 
 div.outer-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 98vh;
+    height: 100vh;
 }
 
 div.inner-container {
-    border: 2px solid #a0a0a0;
-    width: 800px;
-    margin: 0 auto;
-    padding: 20px;
+    /* empty */
 }
 
 h1 {
@@ -37,6 +34,3 @@ a:hover {
     color: #fff;
 }
 
-ul {
-    list-style-type: none;
-}
