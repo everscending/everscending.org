@@ -1,11 +1,3 @@
-body {
-    background-color: #202020;
-    font-family: verdana;
-    color: #ebebeb;
-    text-align: center;
-    height: 100%;
-    overflow: auto;
-}
 
 div.outer-container {
     display: flex;

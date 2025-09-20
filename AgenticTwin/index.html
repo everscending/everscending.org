@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LinkedIn Agent - Everscending</title>
+    <link rel="stylesheet" href="../styles.css">
+    <script type="module" src="https://gradio.s3-us-west-2.amazonaws.com/5.46.1/gradio.js"></script>
+    <script src="../bganimation.js"></script>
+    <style>
+        .linkedin-container {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        #footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .header h1 {
+            margin-bottom: 10px;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 8px 16px;
+            background-color: #333;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #d0d0d0;
+            transition: background-color 0.3s;
+        }
+        
+        .back-link:hover {
+            background-color: #444;
+            color: #fff;
+        }
+        
+        #gradio-container {
+            margin: 0 100px;
+        }
+        
+        gradio-app {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+        
+        .loading-message {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 200px;
+            color: #888;
+            font-style: italic;
+        }
+        
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #333;
+            border-top: 4px solid #e9a23e;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 15px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="linkedin-container">
+        <div class="header">
+            <h1>Welcome to my Agentic Digital Twin</h1>
+            <p>Feel free to chat with me about my career, background, skills and experience.</p>
+        </div>
+        
+        <div class="loading-message" id="loading" >
+            <div class="loading-spinner"></div>
+            Loading Agentic Digital Twin...
+        </div>
+
+        <div id="gradio-container" style="visibility: hidden; height: 534px;">
+
+            <gradio-app 
+                src="https://everscending-linkedin-agent.hf.space"
+                title="LinkedIn Agent"
+                id="gradio-app"
+            ></gradio-app>
+        </div>
+
+        <div id="footer">
+            <a href="../" class="back-link">← Back to Home</a>
+        </div>
+    </div>
+
+
+
+    <script>
+        initAnimation();
+        document.addEventListener('DOMContentLoaded', function () {
+
+            const gradioContainer = document.getElementById('gradio-container');
+            const gradioApp = document.getElementById('gradio-app');
+            const loading = document.getElementById('loading');
+
+            gradioApp.addEventListener('render', () => {
+                loading.style.display = 'none';
+                gradioContainer.style.visibility = 'visible';
+                console.log('Gradio app rendered');
+            });
+
+            // Fallback timeout
+            setTimeout(function () {
+                if (loading.style.display !== 'none') {
+                    loading.innerHTML = 'Loading is taking longer than expected. <a href="https://huggingface.co/spaces/everscending/linkedin_agent" target="_blank">Click here to open in a new tab</a>';
+                }
+            }, 15000);
+
+        });
+    </script>
+</body>
+</html>

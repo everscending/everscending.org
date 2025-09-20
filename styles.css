@@ -1,10 +1,14 @@
+hmtl, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
 body {
-    background-color: #202020;
+    background-color: #101010;
     font-family: verdana;
     color: #ebebeb;
     text-align: center;
-    height: 100%;
-    overflow: hidden;
 }
 
 div.outer-container {
@@ -28,9 +32,36 @@ h2 {
 
 a {
     color: #d0d0d0;
+    text-decoration: none;
 }
 
 a:hover {
     color: #fff;
 }
 
+.back-link {
+    display: inline-block;
+    margin-bottom: 20px;
+    padding: 8px 16px;
+    background-color: #333;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #d0d0d0;
+    transition: background-color 0.3s;
+}
+
+.back-link:hover {
+    background-color: #444;
+    color: #fff;
+}
+
+#footer {
+    text-align: center;
+    margin-top: 20px;
+    color: #ffffff;
+}
+
+#footer a:link,
+#footer a:visited {
+    color: #ffffff;
+}

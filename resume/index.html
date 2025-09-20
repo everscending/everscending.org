@@ -7,6 +7,7 @@
 
 
     <title>Jordan Phillips</title>
+    <script src="../bganimation.js"></script>
 
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css' />
     <style type="text/css">
@@ -14,11 +15,14 @@
         body {
             font-family: 'Open Sans', Verdana, Arial, sans-serif;
             font-size: 10pt;
+        }
+
+        #outer-container {
             color: #444;
             background-color: #fff;
             width:600px;
             text-align: left;
-            margin: 10px auto 5px auto;
+            margin: 20px auto 5px auto;
             padding: 15px 40px;
             border: 1px solid #ddd;
             border-radius: 5px;
@@ -98,8 +102,18 @@
         }
 
         @media print {
+            #animation-container {
+                display: none;
+            }
+            #outer-container {
+                margin-top: 10px;
+            }
             a:link, a:visited {
                 text-decoration: none;
+            }
+
+            #footer {
+                display: none;
             }
         }
 
@@ -173,13 +187,38 @@
             }
         }
 
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 8px 16px;
+            background-color: #333;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #d0d0d0;
+            transition: background-color 0.3s;
+        }
+        
+        .back-link:hover {
+            background-color: #444;
+            color: #fff;
+        }
 
+        #footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #ffffff;
+        }
+
+        #footer a:link, #footer a:visited {
+            color: #ffffff;
+        }
     </style>
 
 </head>
 
 <body>
 
+    <div id="outer-container">
 
     <div class="header-icon">
         <img src="seed-of-life.png" width="75" alt="seed of life"/>
@@ -369,6 +408,14 @@
     Landmark Assisting Program<br />
     Communications Courses 1 & 2<br />
 -->
+</div>
 
+    <div id="footer">
+        <a href="../" class="back-link">← Back to Home</a>
+    </div>
+
+<script>
+    initAnimation();
+</script>
 </body>
 </html>
