@@ -1,0 +1,81 @@
+import { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
+import './AgenticTwin.css';
+
+const AgenticTwin = () => {
+  const [isLoaded, setIsLoaded] = useState(false);
+  const gradioContainerRef = useRef<HTMLDivElement>(null);
+  const gradioAppRef = useRef<any>(null);
+
+  useEffect(() => {
+    // Load Gradio script dynamically
+    const loadGradioScript = () => {
+      const script = document.createElement('script');
+      script.type = 'module';
+      script.src = 'https://gradio.s3-us-west-2.amazonaws.com/5.46.1/gradio.js';
+      script.onload = () => {
+        // Create gradio-app element
+        const gradioApp = document.createElement('gradio-app');
+        gradioApp.setAttribute('src', 'https://everscending-linkedin-agent.hf.space');
+        gradioApp.setAttribute('title', 'LinkedIn Agent');
+        gradioApp.setAttribute('id', 'gradio-app');
+        
+        if (gradioContainerRef.current) {
+          gradioContainerRef.current.appendChild(gradioApp);
+          gradioAppRef.current = gradioApp;
+        }
+
+        // Listen for render event
+        gradioApp.addEventListener('render', () => {
+          setIsLoaded(true);
+          console.log('Gradio app rendered');
+        });
+      };
+      document.head.appendChild(script);
+    };
+
+    loadGradioScript();
+
+    // Fallback timeout
+    const timeout = setTimeout(() => {
+      if (!isLoaded) {
+        const loadingElement = document.getElementById('loading');
+        if (loadingElement) {
+          loadingElement.innerHTML = 'Loading is taking longer than expected. <a href="https://huggingface.co/spaces/everscending/linkedin_agent" target="_blank">Click here to open in a new tab</a>';
+        }
+      }
+    }, 15000);
+
+    return () => clearTimeout(timeout);
+  }, [isLoaded]);
+
+  return (
+    <div className="linkedin-container">
+      <div className="header">
+        <h1>Welcome to my Agentic Digital Twin</h1>
+        <p>Feel free to chat with me about my career, background, skills and experience.</p>
+      </div>
+      
+      <div className="loading-message" id="loading" style={{ display: isLoaded ? 'none' : 'flex' }}>
+        <div className="loading-spinner"></div>
+        Loading Agentic Digital Twin...
+      </div>
+
+      <div 
+        ref={gradioContainerRef}
+        id="gradio-container" 
+        style={{ 
+          visibility: isLoaded ? 'visible' : 'hidden', 
+          height: '534px',
+          margin: '0 100px'
+        }}
+      />
+
+      <div id="footer">
+        <Link to="/" className="back-link">← Back to Home</Link>
+      </div>
+    </div>
+  );
+};
+
+export default AgenticTwin;
