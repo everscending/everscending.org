@@ -5,6 +5,7 @@ import "./AgenticTwin.scss";
 const AgenticTwin = () => {
     const [isLoaded, setIsLoaded] = useState(false);
     const gradioContainerRef = useRef<HTMLDivElement>(null);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const gradioAppRef = useRef<any>(null);
     const isLoading = useRef(false);
 
