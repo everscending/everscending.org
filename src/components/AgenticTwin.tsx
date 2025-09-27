@@ -67,7 +67,7 @@ const AgenticTwin = () => {
     }, [isLoaded]);
 
     return (
-        <div className="linkedin-container">
+        <div className="agentic-twin-container">
             <div className="header">
                 <h1>Welcome to my Agentic Digital Twin</h1>
                 <p>
@@ -90,8 +90,6 @@ const AgenticTwin = () => {
                 id="gradio-container"
                 style={{
                     visibility: isLoaded ? "visible" : "hidden",
-                    height: "534px",
-                    margin: "0 100px",
                 }}
             />
 
