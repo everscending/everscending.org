@@ -14,21 +14,21 @@ const Home = () => {
                 <Link to="/resume" className="nav-link">
                     Resume
                 </Link>
-                <Link
-                    to="https://www.linkedin.com/in/jordaneverscending/"
+                <a
+                    href="https://www.linkedin.com/in/jordaneverscending/"
                     className="nav-link"
                     target="_blank"
                 >
                     LinkedIn
-                </Link>
+                </a>
 
-                <Link
-                    to="mailto:everscending@gmail.com"
+                <a
+                    href="mailto:everscending@gmail.com"
                     className="nav-link"
                     target="_blank"
                 >
                     Contact
-                </Link>
+                </a>
             </div>
         </div>
     );
