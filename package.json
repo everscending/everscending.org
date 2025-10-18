@@ -41,8 +41,8 @@
         "vitest": "^3.2.4"
     },
     "lint-staged": {
-        "*.{json,js,ts,jsx,tsx,html}": [
-            "prettier -v --write --ignore-unknown"
-        ]
+        "src/**/json,js,ts,jsx,tsx,html": "prettier --write --ignore-unknown",
+        "src/**/*.{js,jsx,ts,tsx}": "eslint",
+        "src/**/*.{ts,tsx}": "bash -c tsc --project . --noEmit"
     }
 }
