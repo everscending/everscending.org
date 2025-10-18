@@ -27,7 +27,7 @@ const Home = () => {
                     className="nav-link"
                     target="_blank"
                 >
-                    Dharmakaya (धर्मकाय)
+                    Dharmakaya <span className="subtext">(धर्मकाय)</span>
                 </a>
 
                 <a
