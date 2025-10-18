@@ -23,6 +23,14 @@ const Home = () => {
                 </a>
 
                 <a
+                    href="https://open.spotify.com/playlist/0UZBoDDX7SluAzqzFLSC2T?si=e8ce0beed4db4934"
+                    className="nav-link"
+                    target="_blank"
+                >
+                    Dharmakaya (धर्मकाय)
+                </a>
+
+                <a
                     href="mailto:everscending@gmail.com"
                     className="nav-link"
                     target="_blank"

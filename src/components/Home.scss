@@ -11,14 +11,18 @@
         /* Navigation links styling */
         .nav-link {
             display: block;
-            font-size: 2.5em;
+            font-size: 28pt;
             margin-bottom: 10px;
             color: $nav-link-color;
             text-decoration: none;
-            transition: color 0.3s;
+            transition: color 1s;
+            transition: font-size 0.3s;
 
             &:hover {
                 color: $nav-link-hover-color;
+                font-size: 30pt;
+                transition: color 1s;
+                transition: font-size 0.3s;
             }
         }
     }
