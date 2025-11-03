@@ -42,12 +42,12 @@ const Resume = () => {
 
                 <h2>Technical Skills</h2>
                 <p className="technical-skills">
-                    Agentic Coding, Typescript, React, HTML/CSS/Sass, A11y,
-                    Playwright, Cypress, PHP/Laravel, Python, MySQL/Oracle,
-                    GraphQL, Perl, Shell scripting, *nix system administration,
-                    Git, AWS, Azure App Insights / Kusto, New Relic, CICD,
-                    performance monitoring & logging, vulnerability remediation,
-                    Mermaid diagramming, and many others.
+                    Agentic Coding, Typescript, React, Node.js, HTML/CSS/Sass,
+                    A11y, Playwright, Cypress, PHP/Laravel, Python,
+                    MySQL/Oracle, GraphQL, Perl, Shell scripting, *nix system
+                    administration, Git, AWS, Azure App Insights / Kusto, New
+                    Relic, CICD, performance monitoring & logging, vulnerability
+                    remediation, Mermaid diagramming
                 </p>
 
                 <h2>Professional Experience</h2>
@@ -59,17 +59,25 @@ const Resume = () => {
                 </div>
                 <ul>
                     <li>
-                        Developed features and remediated bugs in UX workflows
-                        for clinicians and patients
+                        Shipped new features in the patient portal + athenaOne
+                        platform used by clinicians
                     </li>
                     <li>
                         Contributed on multiple teams and products using diverse
                         technologies/frameworks
                     </li>
                     <li>
-                        Bootstrapped athenahealth's Telehealth service during
-                        COVID and subsequently overhauled its internals to
-                        enhance reliability and scalability.
+                        Bootstrapped/launched athenahealth’s Telehealth service
+                        during COVID and subsequently overhauled its internals
+                        to enhance reliability and scalability
+                    </li>
+                    <li>
+                        Zoom/Chime SDK integrations SME and liaison to support
+                        teams at Zoom/Amazon
+                    </li>
+                    <li>
+                        SME for Azure App Insights integration, observability,
+                        and alerting
                     </li>
                     <li>Onboarded and mentored junior engineers</li>
                     <li>
@@ -107,8 +115,8 @@ const Resume = () => {
                 </div>
                 <ul>
                     <li>
-                        Leveraged Test Driven Development to ensure bullet-proof
-                        code in banking applications
+                        Leveraged TDD to ensure bullet-proof code in banking
+                        applications
                     </li>
                     <li>
                         Developed features and remediated bugs in internal

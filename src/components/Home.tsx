@@ -14,21 +14,29 @@ const Home = () => {
                 <Link to="/resume" className="nav-link">
                     Resume
                 </Link>
-                <Link
-                    to="https://www.linkedin.com/in/jordaneverscending/"
+                <a
+                    href="https://www.linkedin.com/in/jordaneverscending/"
                     className="nav-link"
                     target="_blank"
                 >
                     LinkedIn
-                </Link>
+                </a>
 
-                <Link
-                    to="mailto:everscending@gmail.com"
+                <a
+                    href="https://open.spotify.com/playlist/0UZBoDDX7SluAzqzFLSC2T?si=e8ce0beed4db4934"
+                    className="nav-link"
+                    target="_blank"
+                >
+                    Dharmakaya <span className="subtext">(धर्मकाय)</span>
+                </a>
+
+                <a
+                    href="mailto:everscending@gmail.com"
                     className="nav-link"
                     target="_blank"
                 >
                     Contact
-                </Link>
+                </a>
             </div>
         </div>
     );

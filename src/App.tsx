@@ -16,10 +16,10 @@ function App() {
             <div className="App">
                 <Routes>
                     <Route path="/" element={<Home />} />
-                    <Route path="/resume/" element={<Resume />} />
-                    <Route path="/agentic-twin/" element={<AgenticTwin />} />
+                    <Route path="/resume" element={<Resume />} />
+                    <Route path="/agentic-twin" element={<AgenticTwin />} />
                     <Route
-                        path="/ai-engineering-path/"
+                        path="/ai-engineering-path"
                         element={<AIEngineeringPath />}
                     />
                     <Route path="*" element={<Navigate to="/" replace />} />
