@@ -59,21 +59,18 @@ const Resume = () => {
                 </div>
                 <ul>
                     <li>
-                        Shipped new features in athenahealth's services used by
-                        patients and clinicians
+                        Coordinated development across UX workflows, RESTful
+                        APIs, and AWS infra to ship features in athenahealth's
+                        services used by patients and clinicians
                     </li>
                     <li>
                         Contributed on multiple teams and products using diverse
                         technologies/frameworks
                     </li>
                     <li>
-                        Bootstrapped/launched athenahealth’s Telehealth service
-                        during COVID and subsequently overhauled its internals
-                        to enhance reliability and scalability
-                    </li>
-                    <li>
-                        Zoom/Chime SDK integrations SME and liaison to support
-                        teams at Zoom/Amazon
+                        Bootstrapped athenahealth’s Telehealth service during
+                        COVID and subsequently overhauled its internals to
+                        enhance reliability and scalability
                     </li>
                     <li>
                         SME for Azure App Insights integration, observability,
