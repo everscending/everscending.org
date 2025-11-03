@@ -59,8 +59,8 @@ const Resume = () => {
                 </div>
                 <ul>
                     <li>
-                        Shipped new features in the patient portal + athenaOne
-                        platform used by clinicians
+                        Shipped new features in athenahealth's services used by
+                        patients and clinicians
                     </li>
                     <li>
                         Contributed on multiple teams and products using diverse
