@@ -30,7 +30,7 @@ const Resume = () => {
                 <p>
                     Seasoned{" "}
                     <span className="bold">Full-Stack Software Engineer</span>{" "}
-                    with 30+ years of app development within
+                    with app development experience within
                     <i> healthcare</i>, <i>banking</i>, <i>education</i>,{" "}
                     <i>non-profit</i>, and <i>e-commerce</i> industries.
                     Building upon decades of experience in delivering
