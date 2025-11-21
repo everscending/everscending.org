@@ -11,6 +11,9 @@ const Home = () => {
                 <Link to="/agentic-twin" className="nav-link">
                     Agentic Digital Twin
                 </Link>
+                <Link to="/research-agent" className="nav-link">
+                    Research Agent
+                </Link>
                 <Link to="/resume" className="nav-link">
                     Resume
                 </Link>
@@ -20,6 +23,14 @@ const Home = () => {
                     target="_blank"
                 >
                     LinkedIn
+                </a>
+
+                <a
+                    href="https://github.com/everscending"
+                    className="nav-link"
+                    target="_blank"
+                >
+                    GitHub
                 </a>
 
                 <a

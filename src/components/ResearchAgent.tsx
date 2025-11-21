@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import "./AgenticTwin.scss";
 
-const AgenticTwin = () => {
+const ResearchAgent = () => {
     const [isLoaded, setIsLoaded] = useState(false);
     const gradioContainerRef = useRef<HTMLDivElement>(null);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -27,9 +27,9 @@ const AgenticTwin = () => {
                 const gradioApp = document.createElement("gradio-app");
                 gradioApp.setAttribute(
                     "src",
-                    "https://everscending-linkedin-agent.hf.space",
+                    "https://everscending-research-agent.hf.space",
                 );
-                gradioApp.setAttribute("title", "LinkedIn Agent");
+                gradioApp.setAttribute("title", "Research Agent");
                 gradioApp.setAttribute("id", "gradio-app");
 
                 if (gradioContainerRef.current) {
@@ -58,7 +58,7 @@ const AgenticTwin = () => {
                     const loadingElement = document.getElementById("loading");
                     if (loadingElement) {
                         loadingElement.innerHTML =
-                            'Loading is taking longer than expected. <a href="https://huggingface.co/spaces/everscending/linkedin_agent" target="_blank">Click here to open in a new tab</a>';
+                            'Loading is taking longer than expected. <a href="https://huggingface.co/spaces/everscending/research_agent" target="_blank">Click here to open in a new tab</a>';
                     }
                 }
             }, 15000);
@@ -67,26 +67,23 @@ const AgenticTwin = () => {
     }, [isLoaded]);
 
     return (
-        <div className="agentic-twin-container">
+        <div className="research-agent-container">
             <div className="header">
-                <h1>Welcome to my Agentic Digital Twin</h1>
+                <h1>Research Agent</h1>
                 <p>
-                    Demonstration of an agentic digital twin, utilizing Python
-                    and OpenAI's Agents framework, that is trained on my
-                    LinkedIn profile and can answer questions about my career
-                    background, skills and experience.
+                    Demonstration of a research agent, utilizing Python and
+                    OpenAI's Agents framework, that can perform web searches and
+                    write a report.
                 </p>
             </div>
-
             <div
                 className="loading-message"
                 id="loading"
                 style={{ display: isLoaded ? "none" : "flex" }}
             >
                 <div className="loading-spinner"></div>
-                Loading Agentic Digital Twin...
+                Loading Research Agent...
             </div>
-
             <div
                 ref={gradioContainerRef}
                 id="gradio-container"
@@ -97,14 +94,14 @@ const AgenticTwin = () => {
 
             <div id="footer-links">
                 <a
-                    href="https://huggingface.co/spaces/everscending/linkedin_agent"
+                    href="https://huggingface.co/spaces/everscending/research_agent"
                     target="_blank"
                 >
                     HF Space
                 </a>
                 &nbsp;|&nbsp;
                 <a
-                    href="https://github.com/everscending/linkedin_agent"
+                    href="https://github.com/everscending/research_agent"
                     target="_blank"
                 >
                     GitHub Code
@@ -120,4 +117,4 @@ const AgenticTwin = () => {
     );
 };
 
-export default AgenticTwin;
+export default ResearchAgent;
