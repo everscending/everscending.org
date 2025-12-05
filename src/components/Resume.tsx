@@ -4,161 +4,235 @@ import "./Resume.scss";
 const Resume = () => {
     return (
         <div id="resume" className="outer-container">
-            <div id="inner-container">
-                <div className="header-icon">
-                    <img
-                        src="/seed-of-life-dark.svg"
-                        width="75"
-                        alt="seed of life"
-                    />
-                </div>
-                <div className="header-contact-left">
-                    <h1>Jordan Phillips</h1>
-                    <p>Full-Stack Software Engineer</p>
-                </div>
-                <div className="header-contact-right">
-                    (512) 888-4038
-                    <br />
-                    <a href="mailto:everscending@gmail.com">
-                        everscending@gmail.com
-                    </a>
-                </div>
-
-                <div style={{ clear: "both" }}></div>
-
-                <h2>Summary</h2>
-                <p>
-                    Seasoned{" "}
-                    <span className="bold">Full-Stack Software Engineer</span>{" "}
-                    with 30+ years of app development within
-                    <i> healthcare</i>, <i>banking</i>, <i>education</i>,{" "}
-                    <i>non-profit</i>, and <i>e-commerce</i> industries.
-                    Building upon decades of experience in delivering
-                    sophisticated SaaS solutions and leading with empathy, I am
-                    now expanding my fluency in agentic AI engineering to build
-                    the next generation of technologies that drive meaningful
-                    impact.
-                </p>
-
-                <h2>Technical Skills</h2>
-                <p className="technical-skills">
-                    Agentic Coding, Typescript, React, Node.js, HTML/CSS/Sass,
-                    A11y, Playwright, Cypress, PHP/Laravel, Python,
-                    MySQL/Oracle, GraphQL, Perl, Shell scripting, *nix system
-                    administration, Git, AWS, Azure App Insights / Kusto, New
-                    Relic, CICD, performance monitoring & logging, vulnerability
-                    remediation, Mermaid diagramming
-                </p>
-
-                <h2>Professional Experience</h2>
-
-                <div className="experience-heading">
-                    <div className="years">2017 - 2025</div>
-                    <h3>Senior/Lead Member of Technical Staff</h3>,
-                    athenahealth, Austin, Tx
-                </div>
-                <ul>
-                    <li>
-                        Shipped new features in athenahealth's services used by
-                        patients and clinicians
-                    </li>
-                    <li>
-                        Contributed on multiple teams and products using diverse
-                        technologies/frameworks
-                    </li>
-                    <li>
-                        Bootstrapped/launched athenahealth’s Telehealth service
-                        during COVID and subsequently overhauled its internals
-                        to enhance reliability and scalability
-                    </li>
-                    <li>
-                        Zoom/Chime SDK integrations SME and liaison to support
-                        teams at Zoom/Amazon
-                    </li>
-                    <li>
-                        SME for Azure App Insights integration, observability,
-                        and alerting
-                    </li>
-                    <li>Onboarded and mentored junior engineers</li>
-                    <li>
-                        Supported production systems during on-call rotation and
-                        client escalations
-                    </li>
-                    <li>
-                        Embraced emerging AI coding tools (GitHub Copilot,
-                        Windsurf/Cascade) to enhance productivity and code
-                        quality while honing skills in framing complex problems,
-                        LLM prompting, and evaluating AI-generated code
-                    </li>
-                </ul>
-
-                <div className="experience-heading">
-                    <div className="years">2015 - 2017</div>
-                    <h3>Technical Lead</h3>, Sapling Learning, Austin, Tx
-                </div>
-                <ul>
-                    <li>
-                        Feature dev and bug fixes in Sapling Learning's flagship
-                        online homework product
-                    </li>
-                    <li>Maintained and improved RESTful APIs in Node.js</li>
-                    <li>
-                        Performed static code analysis and remediated security
-                        flaws using Veracode
-                    </li>
-                    <li>Refactored aging UX to meet a11y standards</li>
-                </ul>
-
-                <div className="experience-heading">
-                    <div className="years">2014 - 2015</div>
-                    <h3>Software Engineer</h3>, BancVue, Austin, Tx
-                </div>
-                <ul>
-                    <li>
-                        Leveraged TDD to ensure bullet-proof code in banking
-                        applications
-                    </li>
-                    <li>
-                        Developed features and remediated bugs in internal
-                        tools, service endpoints, and client-facing applications
-                        written in PHP, Google Closure, jQuery, and Flash
-                    </li>
-                </ul>
-
-                <div className="experience-heading">
-                    <div className="years">2010 - 2014</div>
-                    <h3>Technical Lead / eCommerce Software Engineer</h3>,
-                    Balfour, Austin, Tx
-                </div>
-                <ul>
-                    <li>
-                        Customized Magento eCommerce platform to accommodate
-                        specialized products, check-out, and reporting workflows
-                        eliminating multiple product websites and unifying
-                        company's online brand under one shopping cart.
-                    </li>
-                    <li>
-                        Onboarded and mentored junior devs w/ guidance on best
-                        practices &amp; code reviews
-                    </li>
-                    <li>
-                        Implemented and managed CICD pipelines using Git,
-                        Jenkins, and AWS
-                    </li>
-                    <li>
-                        Optimized performance of Apache/MySQL to increase online
-                        traffic capacity
-                    </li>
-                </ul>
-
-                <p className="to-see-more">
-                    To see more detailed career history, visit{" "}
-                    <strong>
-                        <a href="https://www.linkedin.com/in/jordaneverscending/">
-                            https://www.linkedin.com/in/jordaneverscending/
+            <div className="inner-container">
+                <div className="page-container">
+                    <div className="header-icon">
+                        <img
+                            src="/seed-of-life-dark.svg"
+                            width="75"
+                            alt="seed of life"
+                        />
+                    </div>
+                    <div className="header-contact-left">
+                        <h1>Jordan Phillips</h1>
+                        <p>Full-Stack Software Engineer</p>
+                    </div>
+                    <div className="header-contact-right">
+                        (512) 888-4038
+                        <br />
+                        <a href="mailto:everscending@gmail.com">
+                            everscending@gmail.com
                         </a>
-                    </strong>
-                </p>
+                    </div>
+
+                    <div style={{ clear: "both" }}></div>
+
+                    <h2>Summary</h2>
+                    <p>
+                        Seasoned{" "}
+                        <span className="bold">
+                            Full-Stack Software Engineer
+                        </span>{" "}
+                        with app development experience within
+                        <i> healthcare</i>, <i>banking</i>, <i>education</i>,{" "}
+                        <i>non-profit</i>, and <i>e-commerce</i> industries.
+                        Building upon decades of experience in delivering
+                        sophisticated SaaS solutions and leading with empathy, I
+                        am now expanding my fluency in agentic AI engineering to
+                        build the next generation of technologies that drive
+                        meaningful impact.
+                    </p>
+
+                    <h2>Technical Skills</h2>
+                    <p className="technical-skills">
+                        Agentic Coding, Typescript, React, Node.js,
+                        HTML/CSS/Sass, A11y, Playwright, Cypress, PHP/Laravel,
+                        Python, MySQL/Oracle, GraphQL, Perl, Shell scripting,
+                        *nix system administration, Git, AWS, Azure App Insights
+                        / Kusto, New Relic, CICD, performance monitoring &
+                        logging, vulnerability remediation, Mermaid diagramming
+                    </p>
+
+                    <h2>Professional Experience</h2>
+
+                    <div className="experience-heading">
+                        <div className="years">2017 - 2025</div>
+                        <h3>Senior/Lead Member of Technical Staff</h3>,
+                        athenahealth, Austin, Tx
+                    </div>
+                    <ul>
+                        <li>
+                            Coordinated development across UX workflows, RESTful
+                            APIs, and AWS infra to ship features in
+                            athenahealth's services used by patients and
+                            clinicians
+                        </li>
+                        <li>
+                            Contributed on multiple teams and products using
+                            diverse technologies/frameworks
+                        </li>
+                        <li>
+                            Bootstrapped athenahealth’s Telehealth service
+                            during COVID and subsequently overhauled its
+                            internals to enhance reliability and scalability
+                        </li>
+                        <li>
+                            SME for Azure App Insights integration,
+                            observability, and alerting
+                        </li>
+                        <li>Onboarded and mentored junior engineers</li>
+                        <li>
+                            Supported production systems during on-call rotation
+                            and client escalations
+                        </li>
+                        <li>
+                            Embraced emerging AI coding tools (GitHub Copilot,
+                            Windsurf/Cascade) to enhance productivity and code
+                            quality while honing skills in framing complex
+                            problems, LLM prompting, and evaluating AI-generated
+                            code
+                        </li>
+                    </ul>
+
+                    <div className="experience-heading">
+                        <div className="years">2015 - 2017</div>
+                        <h3>Technical Lead</h3>, Sapling Learning, Austin, Tx
+                    </div>
+                    <ul>
+                        <li>
+                            Feature dev and bug fixes in Sapling Learning's
+                            flagship online homework product
+                        </li>
+                        <li>Maintained and improved RESTful APIs in Node.js</li>
+                        <li>
+                            Performed static code analysis and remediated
+                            security flaws using Veracode
+                        </li>
+                        <li>Refactored aging UX to meet a11y standards</li>
+                    </ul>
+
+                    <div className="experience-heading">
+                        <div className="years">2014 - 2015</div>
+                        <h3>Software Engineer</h3>, BancVue, Austin, Tx
+                    </div>
+                    <ul>
+                        <li>
+                            Leveraged TDD to ship bullet-proof code in banking
+                            applications
+                        </li>
+                        <li>
+                            Developed features and remediated bugs in internal
+                            tools, service endpoints, and client-facing
+                            applications written in PHP, Google Closure, jQuery,
+                            and Flash
+                        </li>
+                    </ul>
+
+                    <div className="experience-heading">
+                        <div className="years">2010 - 2014</div>
+                        <h3>Technical Lead / eCommerce Software Engineer</h3>,
+                        Balfour, Austin, Tx
+                    </div>
+                    <ul>
+                        <li>
+                            Customized Magento eCommerce platform to accommodate
+                            specialized products, check-out, and reporting
+                            workflows eliminating multiple product websites and
+                            unifying company's online brand under one shopping
+                            cart
+                        </li>
+                        <li>
+                            Onboarded and mentored junior devs w/ guidance on
+                            best practices &amp; code reviews
+                        </li>
+                        <li>
+                            Implemented and managed CICD pipelines using Git,
+                            Jenkins, and AWS
+                        </li>
+                        <li>
+                            Optimized performance of Apache/MySQL to increase
+                            online traffic capacity
+                        </li>
+                    </ul>
+                </div>
+
+                <div className="page-container">
+                    <div className="experience-heading">
+                        <div className="years">2006 - 2009</div>
+                        <h3>eCommerce Architect</h3>, Interactive Life Forms,
+                        Austin, Tx
+                    </div>
+                    <ul>
+                        <li>
+                            Architected and implemented a multi-site,
+                            multi-lingual e-commerce platform that doubled
+                            annual revenue from $12M to $24M, solving complex
+                            challenges around inventory management,
+                            localization, and payment processing
+                        </li>
+                        <li>
+                            Integrated NETbilling, USAePay, and PayPal gateways
+                            to expand payment options
+                        </li>
+                        <li>
+                            Developed UI for translating product catalog to
+                            German, Hebrew, and Spanish
+                        </li>
+                        <li>
+                            Supported issues with merchant bank and payment
+                            gateways
+                        </li>
+                        <li>
+                            Localized currency/price data for other countries to
+                            help expand into new markets
+                        </li>
+                        <li>
+                            Monitored sales funnels, conversion rates, and other
+                            metrics in Google Analytics to determine the most
+                            effective UX improvements
+                        </li>
+                    </ul>
+
+                    <div className="experience-heading">
+                        <div className="years">2003 - 2006</div>
+                        <h3>Systems Analyst</h3>, College of Communication, UT
+                        Austin, Austin, Tx
+                    </div>
+                    <ul>
+                        <li>
+                            Spearheaded development of the Journalism Online
+                            Tool at the University of Texas, creating a flexible
+                            content management system that empowered multiple
+                            departments to manage web-based publications
+                            independently
+                        </li>
+                        <li>
+                            Customized various open source tools for faculty to
+                            fulfill instructional tech needs
+                        </li>
+                        <li>
+                            Created SDK for integrating UT's EID auth system
+                            into other PHP applications
+                        </li>
+                        <li>
+                            Collaborated with clients to create project scope
+                            documents
+                        </li>
+                        <li>
+                            Trained students, faculty, and staff on use of
+                            hardware and software applications
+                        </li>
+                    </ul>
+
+                    <p className="to-see-more">
+                        To see more career history, visit{" "}
+                        <strong>
+                            <a href="https://www.linkedin.com/in/jordaneverscending/">
+                                https://www.linkedin.com/in/jordaneverscending/
+                            </a>
+                        </strong>
+                    </p>
+                </div>
             </div>
 
             <div id="footer">

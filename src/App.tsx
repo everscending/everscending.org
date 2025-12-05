@@ -7,6 +7,7 @@ import {
 import Home from "./components/Home";
 import Resume from "./components/Resume";
 import AgenticTwin from "./components/AgenticTwin";
+import ResearchAgent from "./components/ResearchAgent";
 import AIEngineeringPath from "./components/AIEngineeringPath";
 import "./App.scss";
 
@@ -18,6 +19,7 @@ function App() {
                     <Route path="/" element={<Home />} />
                     <Route path="/resume" element={<Resume />} />
                     <Route path="/agentic-twin" element={<AgenticTwin />} />
+                    <Route path="/research-agent" element={<ResearchAgent />} />
                     <Route
                         path="/ai-engineering-path"
                         element={<AIEngineeringPath />}

@@ -166,7 +166,12 @@ const AIEngineeringPath = () => {
                             >
                                 AI Engineering: Building Applications with
                                 Foundation Models
+                            </a>{" "}
+                            [
+                            <a href="https://www.youtube.com/watch?v=JV3pL1_mn2M">
+                                YouTube speedrun
                             </a>
+                            ]
                         </li>
                         <li>
                             <a
