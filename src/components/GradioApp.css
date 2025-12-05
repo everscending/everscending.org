@@ -17,7 +17,7 @@
     }
 }
 
-/* #footer-links {
+#gradio-footer-links {
     & a {
         color: #888;
 
@@ -25,7 +25,7 @@
             color: #fff;
         }
     }
-} */
+}
 
 /* #footer {
     text-align: center;

@@ -1,56 +1,21 @@
 import { useEffect, useRef, useState } from "react";
 import Layout from "./Layout";
 import "./GradioApp.css";
+import loadGradioScript from "../utils/loadGradioScript";
 
 const AgenticTwin = () => {
     const [isLoaded, setIsLoaded] = useState(false);
     const gradioContainerRef = useRef<HTMLDivElement>(null);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const gradioAppRef = useRef<any>(null);
     const isLoading = useRef(false);
 
     useEffect(() => {
-        // Load Gradio script dynamically
-        const loadGradioScript = () => {
-            console.log(
-                "Loading Gradio script..",
-                isLoaded,
-                gradioAppRef.current,
-            );
-
-            const script = document.createElement("script");
-            script.type = "module";
-            script.src =
-                "https://gradio.s3-us-west-2.amazonaws.com/5.49.1/gradio.js";
-            script.onload = () => {
-                // Create gradio-app element
-                const gradioApp = document.createElement("gradio-app");
-                gradioApp.setAttribute(
-                    "src",
-                    "https://everscending-linkedin-agent.hf.space",
-                );
-                gradioApp.setAttribute("title", "LinkedIn Agent");
-                gradioApp.setAttribute("id", "gradio-app");
-
-                if (gradioContainerRef.current) {
-                    gradioContainerRef.current.appendChild(gradioApp);
-                    gradioAppRef.current = gradioApp;
-                }
-
-                // Listen for render event
-                gradioApp.addEventListener("render", () => {
-                    setIsLoaded(true);
-                    console.log("Gradio app rendered");
-                });
-            };
-            document.head.appendChild(script);
-        };
-
         let timeout: ReturnType<typeof setTimeout>;
 
         if (!isLoading.current) {
             isLoading.current = true;
-            loadGradioScript();
+            loadGradioScript("LinkedIn Agent", gradioContainerRef, () => {
+                setIsLoaded(true);
+            });
 
             // Fallback timeout
             timeout = setTimeout(() => {
@@ -72,9 +37,9 @@ const AgenticTwin = () => {
                 <h1>Welcome to my Agentic Digital Twin</h1>
                 <p>
                     Demonstration of an agentic digital twin, utilizing Python
-                    and OpenAI's Agents framework, that is trained on my
+                    and OpenAI's Agents SDK. This agent demo is trained on my
                     LinkedIn profile and can answer questions about my career
-                    background, skills and experience.
+                    background, skills, and experience.
                 </p>
             </div>
 
@@ -95,7 +60,7 @@ const AgenticTwin = () => {
                 }}
             />
 
-            <div id="footer-links">
+            <div id="gradio-footer-links">
                 <a
                     href="https://huggingface.co/spaces/everscending/linkedin_agent"
                     target="_blank"
