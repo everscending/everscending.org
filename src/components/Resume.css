@@ -1,0 +1,147 @@
+#resume.outer-container {
+    /* CSS Custom Properties */
+    --primary-color: #444;
+    --secondary-color: #222;
+    --background-color: #fff;
+    --border-color: #ddd;
+    --text-color: #444;
+
+    justify-content: center;
+    align-items: center;
+    font-family: Verdana;
+}
+
+#resume.outer-container .inner-container {
+    /* Layout & Structure */
+    color: var(--text-color);
+    background-color: var(--background-color);
+    max-width: 600px;
+    text-align: left;
+    margin: 0 auto;
+    padding: 15px 40px;
+    border: 2px solid var(--border-color);
+    border-radius: 10px;
+    font-size: 10pt;
+}
+
+/* Header Layout */
+#resume.outer-container .inner-container .header-icon {
+    float: left;
+    margin-right: 10px;
+}
+
+#resume.outer-container .inner-container .header-contact-left {
+    float: left;
+    margin-top: 15px;
+}
+
+#resume.outer-container .inner-container .header-contact-left p {
+    margin: 0;
+}
+
+#resume.outer-container .inner-container .header-contact-right {
+    float: right;
+    text-align: right;
+    margin-top: 15px;
+    font-size: 9pt;
+}
+
+/* Typography */
+#resume.outer-container .inner-container h1 {
+    margin: 0;
+    font-size: 1.6em;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+#resume.outer-container .inner-container h2 {
+    margin: 10px 0;
+    padding: 3px 5px;
+    font-size: 11pt;
+    color: var(--secondary-color);
+    background-color: var(--border-color);
+    border-radius: 5px;
+}
+
+#resume.outer-container .inner-container h2:not(:first-child) {
+    margin-top: 20px;
+}
+
+#resume.outer-container .inner-container h3 {
+    font-size: 0.9em;
+    color: var(--secondary-color);
+    display: inline;
+}
+
+#resume.outer-container .inner-container hr {
+    color: var(--primary-color);
+    margin-top: 3px;
+}
+
+/* Links */
+#resume.outer-container .inner-container a:link,
+#resume.outer-container .inner-container a:visited {
+    color: var(--primary-color);
+}
+
+/* Lists */
+#resume.outer-container .inner-container ul {
+    padding-left: 30px;
+    margin: 5px 0 10px 0;
+}
+
+/* Utility Classes */
+#resume.outer-container .inner-container .technical-skills {
+    text-align: center;
+    margin: 0;
+}
+
+#resume.outer-container .inner-container .years {
+    float: right;
+}
+
+#resume.outer-container .inner-container .bold {
+    font-weight: bold;
+}
+
+#resume.outer-container .inner-container .to-see-more {
+    font-size: 0.8em;
+    text-align: center;
+}
+
+@media print {
+    html,
+    body,
+    div#root {
+        background-color: #fff;
+    }
+    #animation-container {
+        display: none;
+    }
+
+    #resume.outer-container .inner-container {
+        border: none;
+        border-radius: 0;
+        max-width: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    a:link,
+    a:visited {
+        text-decoration: none;
+    }
+    #footer {
+        display: none;
+    }
+
+    .page-container {
+        page-break-after: always;
+        border: 2px solid var(--border-color);
+        border-radius: 10px;
+        max-width: 600px;
+        padding: 15px 40px;
+        height: calc(100vh - 40px);
+    }
+}
+

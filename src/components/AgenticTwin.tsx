@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
-import "./AgenticTwin.scss";
+import Layout from "./Layout";
+import "./GradioApp.css";
 
 const AgenticTwin = () => {
     const [isLoaded, setIsLoaded] = useState(false);
@@ -67,7 +67,7 @@ const AgenticTwin = () => {
     }, [isLoaded]);
 
     return (
-        <div className="agentic-twin-container">
+        <Layout id="agentic-twin">
             <div className="header">
                 <h1>Welcome to my Agentic Digital Twin</h1>
                 <p>
@@ -110,13 +110,7 @@ const AgenticTwin = () => {
                     GitHub Code
                 </a>
             </div>
-
-            <div id="footer">
-                <Link to="/" className="back-link">
-                    ← Back to Home
-                </Link>
-            </div>
-        </div>
+        </Layout>
     );
 };
 

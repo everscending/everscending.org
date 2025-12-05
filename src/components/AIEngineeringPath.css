@@ -1,0 +1,27 @@
+#ai-engineering-path.outer-container .inner-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+#ai-engineering-path.outer-container .inner-container h1 {
+    color: #e9a23e;
+}
+
+#ai-engineering-path.outer-container .inner-container h2 {
+    color: #fdc679;
+}
+
+#ai-engineering-path.outer-container .inner-container a {
+    color: #d0d0d0;
+}
+
+#ai-engineering-path.outer-container .inner-container a:hover {
+    color: #fff;
+}
+
+#ai-engineering-path.outer-container .inner-container ul {
+    list-style-type: none;
+    padding: 0;
+}
+

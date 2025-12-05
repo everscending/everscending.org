@@ -1,5 +1,5 @@
-.agentic-twin-container,
-.research-agent-container {
+#agentic-twin,
+#research-agent {
     width: 100%;
     height: 100vh;
     display: flex;
@@ -78,3 +78,4 @@ gradio-app {
         margin: 0 5px;
     }
 }
+

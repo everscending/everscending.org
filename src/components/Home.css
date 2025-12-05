@@ -1,18 +1,22 @@
 #home.outer-container {
+    --nav-link-color: #d0d0d0;
+    --nav-link-hover-color: #fff;
+
     justify-content: center;
     align-items: center;
 
-    div.inner-container {
-        $nav-link-color: #d0d0d0;
-        $nav-link-hover-color: #fff;
+    & div.inner-container {
+        & img.home-logo {
+            height: 300px;
+            margin-bottom: 20px;
+        }
 
-        /* Navigation links styling */
-        .nav-link {
+        & .nav-link {
             display: block;
             font-size: 28pt;
             margin: 0;
             padding-bottom: 10px;
-            color: $nav-link-color;
+            color: var(--nav-link-color);
             text-decoration: none;
             transition: color 1s;
             transition: font-size 0.3s;
@@ -22,7 +26,7 @@
             }
 
             &:hover {
-                color: $nav-link-hover-color;
+                color: var(--nav-link-hover-color);
                 font-size: 32pt;
                 transition: color 1s;
                 transition: font-size 0.3s;

@@ -9,7 +9,7 @@ import Resume from "./components/Resume";
 import AgenticTwin from "./components/AgenticTwin";
 import ResearchAgent from "./components/ResearchAgent";
 import AIEngineeringPath from "./components/AIEngineeringPath";
-import "./App.scss";
+import "./App.css";
 
 function App() {
     return (

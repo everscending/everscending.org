@@ -1,0 +1,63 @@
+/* CSS Custom Properties */
+:root {
+    --primary-bg: #101010;
+    --primary-text: #ebebeb;
+    --accent-orange: #e9a23e;
+    --accent-yellow: #fdc679;
+    --link-color: #d0d0d0;
+    --link-hover-color: #fff;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+body {
+    background-color: var(--primary-bg);
+    font-family: optima;
+    color: var(--primary-text);
+    text-align: center;
+}
+
+div.outer-container {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+h1 {
+    color: var(--accent-orange);
+}
+
+h2 {
+    color: var(--accent-yellow);
+}
+
+#back-to-home {
+    text-align: center;
+    margin: 20px 0;
+    color: var(--link-hover-color);
+}
+
+#back-to-home a {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #333;
+    border-radius: 4px;
+    text-decoration: none;
+    color: var(--link-color);
+    transition: background-color 0.3s;
+}
+
+#back-to-home a:hover {
+    background-color: #444;
+    color: var(--link-hover-color);
+}
+
+#back-to-home a:link,
+#back-to-home a:visited {
+    color: var(--link-hover-color);
+}

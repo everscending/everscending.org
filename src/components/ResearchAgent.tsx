@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
-import "./AgenticTwin.scss";
+import Layout from "./Layout";
+import "./GradioApp.css";
 
 const ResearchAgent = () => {
     const [isLoaded, setIsLoaded] = useState(false);
@@ -67,7 +67,7 @@ const ResearchAgent = () => {
     }, [isLoaded]);
 
     return (
-        <div className="research-agent-container">
+        <Layout id="research-agent">
             <div className="header">
                 <h1>Research Agent</h1>
                 <p>
@@ -107,13 +107,7 @@ const ResearchAgent = () => {
                     GitHub Code
                 </a>
             </div>
-
-            <div id="footer">
-                <Link to="/" className="back-link">
-                    ← Back to Home
-                </Link>
-            </div>
-        </div>
+        </Layout>
     );
 };
 
