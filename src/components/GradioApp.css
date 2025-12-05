@@ -11,24 +11,26 @@
 .header {
     text-align: center;
     margin-bottom: 20px;
+
+    & h1 {
+        margin-bottom: 10px;
+    }
 }
 
-.header h1 {
-    margin-bottom: 10px;
-}
+/* #footer-links {
+    & a {
+        color: #888;
 
-#footer-links a {
-    color: #888;
-}
+        &:hover {
+            color: #fff;
+        }
+    }
+} */
 
-#footer-links a:hover {
-    color: #fff;
-}
-
-#footer {
+/* #footer {
     text-align: center;
     margin-top: 20px;
-}
+} */
 
 #gradio-container {
     margin: 0 100px;
@@ -74,8 +76,8 @@ gradio-app {
     .agentic-twin-container {
         padding: 0;
     }
+
     #gradio-container {
         margin: 0 5px;
     }
 }
-

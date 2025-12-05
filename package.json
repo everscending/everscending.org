@@ -4,8 +4,8 @@
     "version": "0.0.0",
     "type": "module",
     "scripts": {
-        "dev": "bun src/index.html",
-        "build": "bun build src/index.html --outdir dist",
+        "dev": "vite",
+        "build": "tsc -b && vite build",
         "test": "vitest --exclude tests/*",
         "playwright": "playwright test",
         "lint": "eslint .",

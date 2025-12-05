@@ -40,24 +40,24 @@ h2 {
     text-align: center;
     margin: 20px 0;
     color: var(--link-hover-color);
-}
 
-#back-to-home a {
-    display: inline-block;
-    padding: 8px 16px;
-    background-color: #333;
-    border-radius: 4px;
-    text-decoration: none;
-    color: var(--link-color);
-    transition: background-color 0.3s;
-}
+    & a {
+        display: inline-block;
+        padding: 8px 16px;
+        background-color: #333;
+        border-radius: 4px;
+        text-decoration: none;
+        color: var(--link-color);
+        transition: background-color 0.3s;
 
-#back-to-home a:hover {
-    background-color: #444;
-    color: var(--link-hover-color);
-}
+        &:hover {
+            background-color: #444;
+            color: var(--link-hover-color);
+        }
 
-#back-to-home a:link,
-#back-to-home a:visited {
-    color: var(--link-hover-color);
+        &:link,
+        &:visited {
+            color: var(--link-hover-color);
+        }
+    }
 }

@@ -23,6 +23,7 @@ const Layout = ({
                 <div id="social-links">
                     <a
                         href="https://linkedin.com/in/jordaneverscending"
+                        title="LinkedIn"
                         target="_blank"
                         rel="noopener noreferrer"
                     >
@@ -30,6 +31,7 @@ const Layout = ({
                     </a>
                     <a
                         href="https://github.com/everscending"
+                        title="Github"
                         target="_blank"
                         rel="noopener noreferrer"
                     >
