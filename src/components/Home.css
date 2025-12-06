@@ -18,8 +18,9 @@
             padding-bottom: 10px;
             color: var(--nav-link-color);
             text-decoration: none;
-            transition: color 1s;
-            transition: font-size 0.3s;
+            transition:
+                color 0.3s,
+                font-size 0.3s;
 
             & > span.subtext {
                 font-size: 18pt;
@@ -28,8 +29,9 @@
             &:hover {
                 color: var(--nav-link-hover-color);
                 font-size: 32pt;
-                transition: color 1s;
-                transition: font-size 0.3s;
+                transition:
+                    color 0.3s,
+                    font-size 0.3s;
             }
         }
     }
