@@ -188,7 +188,7 @@ const AIEngineeringPath = () => {
                 </li>
             </ul>
 
-            <h2>Protocals, SDKs, Frameworks, etc.</h2>
+            <h2>Protocols, SDKs, Frameworks, etc.</h2>
             <ul>
                 <li>
                     <a
@@ -265,7 +265,7 @@ const AIEngineeringPath = () => {
                 </li>
             </ul>
 
-            <h2>Hacakthons & Comptetitions</h2>
+            <h2>Hackathons & Competitions</h2>
             <ul>
                 <li>
                     <a

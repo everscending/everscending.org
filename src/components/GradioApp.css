@@ -17,21 +17,6 @@
     }
 }
 
-#gradio-footer-links {
-    & a {
-        color: #888;
-
-        &:hover {
-            color: #fff;
-        }
-    }
-}
-
-/* #footer {
-    text-align: center;
-    margin-top: 20px;
-} */
-
 #gradio-container {
     margin: 0 100px;
     text-align: left;
@@ -73,7 +58,8 @@ gradio-app {
 }
 
 @media (max-width: 700px) {
-    .agentic-twin-container {
+    #agentic-twin,
+    #research-agent {
         padding: 0;
     }
 

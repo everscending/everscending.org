@@ -1,35 +1,24 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import Layout from "./Layout";
 import "./GradioApp.css";
 import loadGradioScript from "../utils/loadGradioScript";
 
 const AgenticTwin = () => {
-    const [isLoaded, setIsLoaded] = useState(false);
     const gradioContainerRef = useRef<HTMLDivElement>(null);
     const isLoading = useRef(false);
 
     useEffect(() => {
-        let timeout: ReturnType<typeof setTimeout>;
-
         if (!isLoading.current) {
             isLoading.current = true;
-            loadGradioScript("LinkedIn Agent", gradioContainerRef, () => {
-                setIsLoaded(true);
-            });
-
-            // Fallback timeout
-            timeout = setTimeout(() => {
-                if (!isLoaded) {
-                    const loadingElement = document.getElementById("loading");
-                    if (loadingElement) {
-                        loadingElement.innerHTML =
-                            'Loading is taking longer than expected. <a href="https://huggingface.co/spaces/everscending/linkedin_agent" target="_blank">Click here to open in a new tab</a>';
-                    }
-                }
-            }, 15000);
+            return loadGradioScript(
+                "LinkedIn Agent",
+                gradioContainerRef,
+                () => {
+                    isLoading.current = false;
+                },
+            );
         }
-        return () => clearTimeout(timeout);
-    }, [isLoaded]);
+    }, []);
 
     return (
         <Layout id="agentic-twin">
@@ -43,27 +32,13 @@ const AgenticTwin = () => {
                 </p>
             </div>
 
-            <div
-                className="loading-message"
-                id="loading"
-                style={{ display: isLoaded ? "none" : "flex" }}
-            >
-                <div className="loading-spinner"></div>
-                Loading Agentic Digital Twin...
-            </div>
-
-            <div
-                ref={gradioContainerRef}
-                id="gradio-container"
-                style={{
-                    visibility: isLoaded ? "visible" : "hidden",
-                }}
-            />
+            <div ref={gradioContainerRef} id="gradio-container" />
 
             <div id="gradio-footer-links">
                 <a
                     href="https://huggingface.co/spaces/everscending/linkedin_agent"
                     target="_blank"
+                    rel="noopener noreferrer"
                 >
                     HF Space
                 </a>
@@ -71,6 +46,7 @@ const AgenticTwin = () => {
                 <a
                     href="https://github.com/everscending/linkedin_agent"
                     target="_blank"
+                    rel="noopener noreferrer"
                 >
                     GitHub Code
                 </a>

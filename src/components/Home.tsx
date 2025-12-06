@@ -28,6 +28,7 @@ const Home = () => {
                 href="https://open.spotify.com/playlist/0UZBoDDX7SluAzqzFLSC2T?si=e8ce0beed4db4934"
                 className="nav-link"
                 target="_blank"
+                rel="noopener noreferrer"
             >
                 धर्मकाय
             </a>
