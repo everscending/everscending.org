@@ -1,5 +1,5 @@
 #resume.outer-container {
-    // CSS Custom Properties
+    /* CSS Custom Properties */
     --primary-color: #444;
     --secondary-color: #222;
     --background-color: #fff;
@@ -10,8 +10,8 @@
     align-items: center;
     font-family: Verdana;
 
-    .inner-container {
-        // Layout & Structure
+    & .inner-container {
+        /* Layout & Structure */
         color: var(--text-color);
         background-color: var(--background-color);
         max-width: 600px;
@@ -22,86 +22,87 @@
         border-radius: 10px;
         font-size: 10pt;
 
-        // Header Layout
-        .header-icon {
+        /* Header Layout */
+        & .header-icon {
             float: left;
             margin-right: 10px;
         }
 
-        .header-contact-left {
+        & .header-contact-left {
             float: left;
             margin-top: 15px;
-            p {
+
+            & p {
                 margin: 0;
             }
         }
 
-        .header-contact-right {
+        & .header-contact-right {
             float: right;
             text-align: right;
             margin-top: 15px;
             font-size: 9pt;
         }
 
-        // Typography
-        h1 {
+        /* Typography */
+        & h1 {
             margin: 0;
             font-size: 1.6em;
             font-weight: 700;
             color: var(--primary-color);
         }
 
-        h2 {
+        & h2 {
             margin: 10px 0;
             padding: 3px 5px;
             font-size: 11pt;
             color: var(--secondary-color);
             background-color: var(--border-color);
             border-radius: 5px;
+
+            &:not(:first-child) {
+                margin-top: 20px;
+            }
         }
 
-        h2:not(:first-child) {
-            margin-top: 20px;
-        }
-
-        h3 {
+        & h3 {
             font-size: 0.9em;
             color: var(--secondary-color);
             display: inline;
         }
 
-        hr {
+        & hr {
             color: var(--primary-color);
             margin-top: 3px;
         }
 
-        // Links
-        a:link,
-        a:visited {
+        /* Links */
+        & a:link,
+        & a:visited {
             color: var(--primary-color);
         }
 
-        // Lists
-        ul {
+        /* Lists */
+        & ul {
             padding-left: 30px;
             margin: 5px 0 10px 0;
         }
 
-        // Utility Classes
-        .technical-skills {
+        /* Utility Classes */
+        & .technical-skills {
             text-align: center;
             margin: 0;
         }
 
-        .years {
+        & .years {
             float: right;
         }
 
-        .bold {
+        & .bold {
             font-weight: bold;
         }
 
-        .to-see-more {
+        & .to-see-more {
             font-size: 0.8em;
             text-align: center;
         }
@@ -114,6 +115,7 @@
     div#root {
         background-color: #fff;
     }
+
     #animation-container {
         display: none;
     }
@@ -126,10 +128,13 @@
         margin: 0;
     }
 
-    a:link,
-    a:visited {
-        text-decoration: none;
+    a {
+        &:link,
+        &:visited {
+            text-decoration: none;
+        }
     }
+
     #footer {
         display: none;
     }
@@ -143,3 +148,4 @@
         height: calc(100vh - 40px);
     }
 }
+

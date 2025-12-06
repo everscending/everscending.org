@@ -15,7 +15,8 @@ test("has title", async ({ page }) => {
     ).toBeVisible();
 
     await expect(page.getByRole("link", { name: "Resume" })).toBeVisible();
+    await expect(page.getByRole("link", { name: "धर्मकाय" })).toBeVisible();
     await expect(page.getByRole("link", { name: "LinkedIn" })).toBeVisible();
-    await expect(page.getByRole("link", { name: "Dharmakaya" })).toBeVisible();
-    await expect(page.getByRole("link", { name: "Contact" })).toBeVisible();
+    await expect(page.getByRole("link", { name: "Github" })).toBeVisible();
+    await expect(page.getByRole("link", { name: "Email" })).toBeVisible();
 });

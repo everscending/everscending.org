@@ -1,0 +1,20 @@
+.outer-container #footer #social-links {
+    & img {
+        width: 20px;
+        height: 20px;
+        opacity: 0.75;
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    & a {
+        &:hover img {
+            opacity: 1;
+            transition: opacity 0.2s ease-in-out;
+        }
+
+        &:not(:first-child) {
+            margin-left: 10px;
+        }
+    }
+}
+

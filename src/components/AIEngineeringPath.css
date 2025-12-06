@@ -1,0 +1,26 @@
+#ai-engineering-path.outer-container .inner-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+
+    & h1 {
+        color: #e9a23e;
+    }
+
+    & h2 {
+        color: #fdc679;
+    }
+
+    & a {
+        color: #d0d0d0;
+
+        &:hover {
+            color: #fff;
+        }
+    }
+
+    & ul {
+        list-style-type: none;
+        padding: 0;
+    }
+}
