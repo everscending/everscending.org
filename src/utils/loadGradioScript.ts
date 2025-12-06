@@ -28,25 +28,26 @@ const loadGradioScript = (
 
         if (gradioContainerRef?.current) {
             gradioContainerRef.current.appendChild(gradioApp);
-        }
 
-        // Listen for render event
-        const gradioAppOnRender = () => {
-            // Remove loading UI if it exists
-            gradioContainerRef
-                .current!.querySelector(".loading-message")
-                ?.remove();
-            gradioApp.style.visibility = "visible";
-            gradioApp.style.height = "auto";
-            onRender();
-            console.info("Gradio app rendered...");
-            isLoading = false;
-            gradioApp.removeEventListener("render", gradioAppOnRender);
-        };
-        gradioApp.addEventListener("render", gradioAppOnRender);
+            // Listen for render event
+            const gradioAppOnRender = () => {
+                // Remove loading UI if it exists
+                gradioContainerRef.current
+                    ?.querySelector(".loading-message")
+                    ?.remove();
+                gradioApp.style.visibility = "visible";
+                gradioApp.style.height = "auto";
+                onRender();
+                console.info("Gradio app rendered...");
+                isLoading = false;
+                gradioApp.removeEventListener("render", gradioAppOnRender);
+            };
+            gradioApp.addEventListener("render", gradioAppOnRender);
+        }
     };
 
-    gradioContainerRef.current!.innerHTML = `
+    if (gradioContainerRef?.current) {
+        gradioContainerRef.current.innerHTML = `
             <div
                 class="loading-message"
                 style="display: flex;"
@@ -54,13 +55,14 @@ const loadGradioScript = (
                 <div class="loading-spinner"></div>
                 Loading ${title}...
             </div>`;
-    document.head.appendChild(script);
+        document.head.appendChild(script);
+    }
 
     // Fallback timeout
     const timeoutId = setTimeout(() => {
         if (isLoading) {
             const loadingElement =
-                gradioContainerRef.current!.querySelector(".loading-message");
+                gradioContainerRef.current?.querySelector(".loading-message");
             if (loadingElement) {
                 loadingElement.innerHTML = `Loading is taking longer than expected. <a href="https://huggingface.co/spaces/everscending/${hfSpaceId}" target="_blank" rel="noopener noreferrer">Click here to open in a new tab</a>`;
             }
@@ -69,6 +71,9 @@ const loadGradioScript = (
 
     return () => {
         clearTimeout(timeoutId);
+        if (script.parentNode) {
+            script.parentNode.removeChild(script);
+        }
     };
 };
 
