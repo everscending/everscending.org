@@ -1,4 +1,5 @@
 import Layout from "./Layout";
+import BlogSection from "./BlogSection";
 import digitalLotusMobileLogo from "../assets/Everscending_Digital_Lotus_Logo.png";
 import digitalLotusDesktopLogo from "../assets/Everscending_Digital_Lotus_Logo2.png";
 import "./Home.css";
@@ -17,6 +18,8 @@ const Home = () => {
                 src={digitalLotusDesktopLogo}
                 alt="Digital Lotus"
             />
+
+            <BlogSection />
         </Layout>
     );
 };

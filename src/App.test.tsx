@@ -20,6 +20,12 @@ describe("App", () => {
         expect(screen.getByText("AI Engineering Path")).toBeInTheDocument();
         expect(screen.getByText("Projects")).toBeInTheDocument();
         expect(screen.getByText("Resume")).toBeInTheDocument();
+        expect(
+            screen.getByRole("region", { name: /blog/i }),
+        ).toBeInTheDocument();
+        expect(
+            screen.getByRole("heading", { name: /blog/i }),
+        ).toBeInTheDocument();
     });
 
     it("navigates to resume page when clicked", async () => {

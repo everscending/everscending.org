@@ -16,3 +16,13 @@ test("has title", async ({ page }) => {
   await expect(page.getByRole("link", { name: "Github" })).toBeVisible();
   await expect(page.getByRole("link", { name: "Email" })).toBeVisible();
 });
+
+test("home page shows blog section with heading and loading state", async ({
+    page,
+}) => {
+    await page.goto("http://localhost:5173/");
+
+    await expect(page.getByRole("region", { name: "Blog" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Blog" })).toBeVisible();
+    await expect(page.getByText("Loading…")).toBeVisible();
+});
