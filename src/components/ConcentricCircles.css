@@ -1,0 +1,18 @@
+#concentric-circles {
+    position: absolute;
+    /* top: 45%;
+    left: 45%; */
+    /* transform-box: */
+    /* transform-origin: center;
+    transform: translate(75%, 75%); */
+
+    img:first-child {
+        border: 1px solid red;
+        float: left;
+    }
+
+    img:last-child {
+        border: 1px solid blue;
+        float: right;
+    }
+}

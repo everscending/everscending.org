@@ -1,0 +1,9 @@
+#dojo-container {
+    width: 80%;
+    min-width: 80%;
+    height: 600px;
+    margin: 0 auto;
+    border: 1px solid #333;
+    background-color: #101010;
+    position: relative;
+}
