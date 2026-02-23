@@ -39,20 +39,20 @@ _This document builds collaboratively through step-by-step discovery. Sections a
 **Scale & Complexity:**
 
 - **Primary domain:** Web front-end (SPA, single external API integration).
-- **Complexity level:** Low (PRD classification: API integration, env-based config, standard front-end work; brownfield).
+- **Complexity level:** Low (PRD classification: API integration, host-derived API config, standard front-end work; brownfield).
 - **Estimated architectural components:** One new front-page section (blog block); one config-driven API client; a small set of UI states (loading, empty, error) and pagination; reuse of existing layout and design tokens.
 
 ### Technical Constraints & Dependencies
 
 - **SPA:** React + Vite; blog is a section on the home route. No SSR/SSG in MVP.
 - **Data:** Client-side fetch only; no global store required; component or simple cache for list (and optional detail).
-- **API:** SonicJS backend already set up; single source of truth for API base per environment (e.g. `VITE_BLOG_API_BASE` or equivalent).
+- **API:** SonicJS backend already set up; API base is derived at runtime from the current frontend host via `getBlogApiBaseUrl()` in `src/utils/blogApi.ts`; host → API base mapping is the single source of truth (documented in README and implemented in code).
 - **Browser:** Modern evergreen (Chrome, Firefox, Safari, Edge); ES2022+ and standard `fetch`; no legacy IE.
 - **Design:** Extend existing everscending.org design system (custom CSS, same containers/typography/breakpoints); no new UI framework.
 
 ### Cross-Cutting Concerns Identified
 
-- **Environment configuration:** Single env variable and host → API base mapping; must be consistent across local, develop, and production builds.
+- **Environment configuration:** API base is derived from the current frontend host (e.g. `window.location.host`) via `getBlogApiBaseUrl()`; host → API base mapping must be documented (README) and implemented in one place (`blogApi.ts`) and consistent across local, develop, and production.
 - **Error and empty handling:** Shared pattern for loading, empty, and error states so the blog section never blocks or breaks the rest of the page.
 - **Layout and accessibility consistency:** Blog must use the same layout, breakpoints, and a11y baseline as the rest of the site so the product feels like one destination.
 - **API contract resilience:** Mapping layer between SonicJS response and UI so minor schema changes don’t force large refactors.
@@ -91,7 +91,7 @@ No new starter template is used. The project is **brownfield**: the existing cod
 - `src/components/` for page and UI components; `src/utils/` for utilities; `src/App.tsx` for routing; each component with co-located `.css`. Blog will add blog-related components and a shared API/config layer.
 
 **Development Experience:**
-- `pnpm dev` (Vite dev server); HMR; ESLint 9 + Prettier 3; Husky + lint-staged for pre-commit (format, lint, `tsc --noEmit`). Environment variables via `import.meta.env` (e.g. `VITE_BLOG_API_BASE`).
+- `pnpm dev` (Vite dev server); HMR; ESLint 9 + Prettier 3; Husky + lint-staged for pre-commit (format, lint, `tsc --noEmit`). Blog API base is derived at runtime from the current host via `getBlogApiBaseUrl()` (no blog-specific env var required).
 
 ## Core Architectural Decisions
 
@@ -125,7 +125,7 @@ No new starter template is used. The project is **brownfield**: the existing cod
 - **API style:** REST (SonicJS). Posts endpoint: `{API_BASE}/api/blog/posts` with `limit` (default 20) and offset/cursor as per API contract.
 - **Client:** Native `fetch`. Timeout (e.g. 10s) then treat as error; no retry in MVP unless explicitly added.
 - **Error handling:** Non-2xx or network/timeout → show error state in blog section only; do not break shell or nav (NFR-I2).
-- **Environment:** One env variable (e.g. `VITE_BLOG_API_BASE`) per build. Mapping: local (localhost:5173), develop (develop.everscending-org.pages.dev), production (everscending-org.pages.dev, everscending.org) → corresponding API base; no hardcoded production URLs in code.
+- **Environment:** API base is derived at runtime from the current frontend host via `getBlogApiBaseUrl()` in `blogApi.ts`. A single host → API base mapping (e.g. localhost:5173, develop.everscending-org.pages.dev, everscending-org.pages.dev, everscending.org, everscending-web.everscending.workers.dev, everscending.ai) is defined in code and documented in README; unknown host returns empty string and the API client returns an error. No blog-specific env variable; same build can run in any environment.
 
 **SonicJS API response schemas**
 
@@ -197,19 +197,19 @@ For the front-page list view, the UI model needs at least: `id`, `slug`, `title`
 ### Infrastructure & Deployment
 
 - **Hosting:** Unchanged; existing static deployment (e.g. Cloudflare Pages). Build output remains `dist/`.
-- **Environment configuration:** API base set at build time via `VITE_BLOG_API_BASE`; each deployment (local, develop, production) uses the correct value for that environment.
+- **Environment configuration:** API base is derived at runtime from the current frontend host via `getBlogApiBaseUrl()`; each deployment (local, develop, production) resolves to the correct API base automatically based on host.
 - **CI/CD:** No change required for blog; existing build and deploy pipeline applies.
 
 ### Decision Impact Analysis
 
 **Implementation sequence:**
-1. Add env config (e.g. `VITE_BLOG_API_BASE`) and document host → API base mapping for local, develop, production.
+1. Add `getBlogApiBaseUrl()` and host → API base mapping in `blogApi.ts`, and document the full mapping in README.
 2. Add API client (fetch + timeout + mapping layer) and types for SonicJS response and UI model.
 3. Add blog section component (wrapper, cards, loading/empty/error, pagination) on the home route using existing layout and styles.
 4. Wire pagination (limit=20, offset/cursor) to API and UI.
 
 **Cross-component dependencies:**
-- Env config is used by the API client only; no other components depend on it directly.
+- Host-derived API base (`getBlogApiBaseUrl()`) is used by the API client only; no other components depend on it directly.
 - API client is used by the blog section; mapping layer isolates SonicJS schema from the rest of the UI.
 - Blog section depends on existing Layout and design tokens; no changes to global layout required beyond inserting the section.
 
@@ -242,8 +242,8 @@ For the front-page list view, the UI model needs at least: `id`, `slug`, `title`
 - **Tests:** Unit tests co-located with source (e.g. `BlogSection.test.tsx`) or in a `src/components/__tests__/` pattern if the project adopts it; E2E in `tests/` (existing). Prefer one consistent approach for new blog tests.
 
 **File structure:**
-- Env: Use `VITE_BLOG_API_BASE` only; do not add another env name for the same concern. Document in README or architecture which host maps to which API base.
-- No new top-level config files for blog; use existing Vite/env approach.
+- Blog API base: Resolve via `getBlogApiBaseUrl()` from current host; host → API base mapping lives in `blogApi.ts` and is documented in README. No blog-specific env variable. Optional `.env.example` with a comment only (e.g. "No env vars required for blog API").
+- No new top-level config files for blog; use existing Vite approach.
 
 ### Format Patterns
 
@@ -275,20 +275,20 @@ For the front-page list view, the UI model needs at least: `id`, `slug`, `title`
 - Put blog API client and mapping in one module/folder; do not duplicate fetch logic in multiple components.
 - Use the SonicJS response schema and types documented in this architecture; extend types only when the API contract changes and update this doc.
 - Use existing design tokens and layout (e.g. `outer-container`, `inner-container`, CSS variables from `App.css`) for blog UI; do not introduce a new design system or new global layout.
-- Resolve API base from env only (`VITE_BLOG_API_BASE`); no hardcoded production URLs.
+- Resolve API base from the current frontend host via `getBlogApiBaseUrl()`; keep the host → API base mapping in one place (`blogApi.ts`) and document it in README; do not scatter API base URLs or duplicate the mapping elsewhere.
 
 **Pattern verification:** Lint and type-check (existing ESLint, Prettier, `tsc --noEmit`). New blog code should follow the same pre-commit checks. Document any intentional deviation in the architecture or AGENTS.md.
 
 ### Pattern Examples
 
 **Good:**
-- One `blogApi.ts` (or `src/blog/api.ts`) that exports `fetchBlogPosts(params)` and `fetchBlogPostBySlug(slug)`, uses `VITE_BLOG_API_BASE`, applies timeout and mapping, and returns typed results or throws for error path.
+- One `blogApi.ts` (or `src/blog/api.ts`) that exports `getBlogApiBaseUrl()`, `fetchBlogPosts(params)` and optionally `fetchBlogPostBySlug(slug)`; uses the host-derived API base from `getBlogApiBaseUrl()`, applies timeout and mapping, and returns typed results or an error result (no unhandled throws). Full host → API base mapping in code and README.
 - Blog section component that calls that API, holds loading/empty/error and list/pagination in local state, and renders one of the three states or the card list + pagination.
 - Types: `SonicJSPost`, `SonicJSPostsResponse`, `BlogPost`, `BlogPagination` aligned with the schema in this doc.
 
 **Avoid:**
 - Fetching posts in more than one place (e.g. both in a layout and in the blog section).
-- Hardcoding `https://everscending-blog...` or any production API URL in source.
+- Defining API base URLs or host mapping outside `blogApi.ts` or README; do not duplicate the mapping in components or config.
 - Using a different response shape or field names without updating the mapping layer and this architecture.
 - Global loading spinner or full-page error for blog API failure; keep failure scoped to the blog section.
 
@@ -305,7 +305,7 @@ everscending.org/
 ├── tsconfig.json
 ├── tsconfig.app.json
 ├── index.html
-├── .env.example                    # Optional: document VITE_BLOG_API_BASE
+├── .env.example                    # Optional: comment only (no blog env var; API base is host-derived)
 ├── .gitignore
 ├── playwright.config.ts
 ├── AGENTS.md                       # Project reference (update with blog when added)
@@ -362,7 +362,7 @@ New blog-related files: `src/components/BlogSection.tsx`, `BlogSection.css`, `Po
 ### Architectural Boundaries
 
 **API boundaries:**
-- **External:** SonicJS at `VITE_BLOG_API_BASE` — `GET /api/blog/posts` (list) and `GET /api/blog/posts/:slug` (single). All blog HTTP calls go through `src/utils/blogApi.ts`; no other module should call the blog API directly.
+- **External:** SonicJS at the URL returned by `getBlogApiBaseUrl()` — `GET {base}/posts` (list) and `GET {base}/posts/:slug` (single). All blog HTTP calls go through `src/utils/blogApi.ts`; no other module should call the blog API directly.
 - **Internal:** No internal REST API; SPA only. Blog section consumes `blogApi` only.
 
 **Component boundaries:**
@@ -380,7 +380,7 @@ New blog-related files: `src/components/BlogSection.tsx`, `BlogSection.css`, `Po
 
 **Pagination (FR4a):** Handled in `BlogSection` (state: page, pagination); `blogApi.fetchBlogPosts({ page, limit })`; UI uses `pagination` from API response.
 
-**Environment & configuration (FR5–FR6):** `VITE_BLOG_API_BASE` read in `blogApi.ts` via `import.meta.env`; no other module reads env for blog.
+**Environment & configuration (FR5–FR6):** API base derived in `blogApi.ts` via `getBlogApiBaseUrl()` from the current frontend host; host → API base mapping in code and README; no other module resolves blog API base.
 
 **Error & empty states (FR7–FR9):** Implemented inside `BlogSection` (conditional render of loading, empty, error, or list); no global error boundary for blog.
 
@@ -390,13 +390,13 @@ New blog-related files: `src/components/BlogSection.tsx`, `BlogSection.css`, `Po
 
 **Internal:** `Home` → `BlogSection` → `PostCard`; `BlogSection` → `blogApi`. One-way data flow; no blog events or shared store in MVP.
 
-**External:** SonicJS (read-only). Env provides API base at build time.
+**External:** SonicJS (read-only). API base is provided at runtime by `getBlogApiBaseUrl()` from the current host.
 
 **Data flow:** User lands on home → `Home` mounts → `BlogSection` mounts → `blogApi.fetchBlogPosts({ page: 1, limit: 20 })` → mapping → state update → render cards + pagination or loading/empty/error.
 
 ### File Organization Patterns
 
-**Configuration:** Root-level Vite/TS/Playwright; env in `.env` (not committed) and `.env.example` for `VITE_BLOG_API_BASE`.
+**Configuration:** Root-level Vite/TS/Playwright; optional `.env.example` with a comment that no blog env var is required (API base is host-derived). README documents the full host → API base mapping.
 
 **Source:** Feature components and shared utils under `src/`; blog API and types centralized in `src/utils/blogApi.ts`.
 
@@ -406,15 +406,15 @@ New blog-related files: `src/components/BlogSection.tsx`, `BlogSection.css`, `Po
 
 ### Development and Build
 
-**Development:** `pnpm dev`; `Home` and `BlogSection` load on `/`; API base from env for current environment.
+**Development:** `pnpm dev`; `Home` and `BlogSection` load on `/`; API base is derived at runtime from the current host via `getBlogApiBaseUrl()`.
 
-**Build:** `pnpm build` → `dist/`; `VITE_BLOG_API_BASE` baked in per build. Deployment unchanged; static hosting serves the SPA.
+**Build:** `pnpm build` → `dist/`; same build runs in any environment; API base is determined at runtime by host. Deployment unchanged; static hosting serves the SPA.
 
 ## Architecture Validation Results
 
 ### Coherence Validation
 
-**Decision compatibility:** Technology choices are consistent: React 19, Vite 7, TypeScript, custom CSS, and SonicJS as the only blog data source. No conflicting decisions; env-based API base, single blog API module, and component-level state are aligned. Versions (Vite 7.x, React 19.x) are current and compatible.
+**Decision compatibility:** Technology choices are consistent: React 19, Vite 7, TypeScript, custom CSS, and SonicJS as the only blog data source. No conflicting decisions; host-derived API base (getBlogApiBaseUrl), single blog API module, and component-level state are aligned. Versions (Vite 7.x, React 19.x) are current and compatible.
 
 **Pattern consistency:** Naming (PascalCase components, camelCase utils, API types aligned with SonicJS) matches the stack and existing AGENTS.md. Structure (blog UI in `src/components/`, single `blogApi.ts` in `src/utils/`) supports one-way data flow and no scattered fetch logic. Process patterns (loading/empty/error in-section, pagination from API) support the architectural decisions.
 
@@ -422,17 +422,17 @@ New blog-related files: `src/components/BlogSection.tsx`, `BlogSection.css`, `Po
 
 ### Requirements Coverage Validation
 
-**Functional requirements coverage:** FR1–FR4 (blog section, list/cards, title/link/excerpt, open post): covered by BlogSection + PostCard + blogApi and mapping. FR4a (pagination, limit 20): covered by blogApi params and BlogSection pagination state/UI. FR5–FR6 (env API base, no hardcoding): covered by `VITE_BLOG_API_BASE` in blogApi. FR7–FR9 (empty, error, rest of site usable): covered by in-section states in BlogSection. FR10–FR11 (blog on front page, layout fit): covered by Home composing BlogSection and existing layout. FR12 (content at load time): covered by fetch-on-mount and no real-time requirement.
+**Functional requirements coverage:** FR1–FR4 (blog section, list/cards, title/link/excerpt, open post): covered by BlogSection + PostCard + blogApi and mapping. FR4a (pagination, limit 20): covered by blogApi params and BlogSection pagination state/UI. FR5–FR6 (correct API base per environment, no scattered hardcoding): covered by `getBlogApiBaseUrl()` and host mapping in blogApi and README. FR7–FR9 (empty, error, rest of site usable): covered by in-section states in BlogSection. FR10–FR11 (blog on front page, layout fit): covered by Home composing BlogSection and existing layout. FR12 (content at load time): covered by fetch-on-mount and no real-time requirement.
 
-**Non-functional requirements coverage:** NFR-P1–P3 (non-blocking load, timeout/error, no main-thread block): addressed by architecture and patterns. NFR-A1–A3 (keyboard, semantic structure, contrast): addressed by UX and design tokens. NFR-I1–I3 (correct API base, error/fallback, mapping layer): addressed by env usage, error handling, and mapping in blogApi.
+**Non-functional requirements coverage:** NFR-P1–P3 (non-blocking load, timeout/error, no main-thread block): addressed by architecture and patterns. NFR-A1–A3 (keyboard, semantic structure, contrast): addressed by UX and design tokens. NFR-I1–I3 (correct API base, error/fallback, mapping layer): addressed by host-derived API base, error handling, and mapping in blogApi.
 
 ### Implementation Readiness Validation
 
-**Decision completeness:** Critical decisions (env config, API client, blog placement) and important ones (pagination, states) are documented. SonicJS response schemas and mapping guidance are in the doc. Versions and rationale are present.
+**Decision completeness:** Critical decisions (host-derived API base via getBlogApiBaseUrl, API client, blog placement) and important ones (pagination, states) are documented. SonicJS response schemas and mapping guidance are in the doc. Versions and rationale are present.
 
 **Structure completeness:** Directory tree lists new files; BlogSection, PostCard, blogApi.ts and optional test locations are specified. Integration points and data flow are described.
 
-**Pattern completeness:** Naming, structure, format, process, and enforcement rules are defined. Good and anti-pattern examples are given. Conflict points (single API module, no hardcoded URLs, scoped states) are addressed.
+**Pattern completeness:** Naming, structure, format, process, and enforcement rules are defined. Good and anti-pattern examples are given. Conflict points (single API module, host-derived mapping in one place, scoped states) are addressed.
 
 ### Gap Analysis Results
 
@@ -495,4 +495,4 @@ No contradictory decisions or missing capabilities found. Pagination query param
 - Respect project structure and boundaries (blog API only in blogApi.ts; BlogSection owns blog state).
 - Use this document and the SonicJS API schemas here for all blog-related architectural questions.
 
-**First implementation priority:** Add env config (`VITE_BLOG_API_BASE`) and document host → API base mapping; then implement `src/utils/blogApi.ts` (fetch, timeout, types, mapping); then add BlogSection and PostCard and integrate into Home.
+**First implementation priority:** Add `getBlogApiBaseUrl()` and host → API base mapping in `src/utils/blogApi.ts`, and document the full mapping in README; then implement the rest of `blogApi.ts` (fetch, timeout, types, mapping); then add BlogSection and PostCard and integrate into Home.

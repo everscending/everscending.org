@@ -148,7 +148,7 @@ So that the blog can load real content in local, develop, and production without
 
 **Given** the app is built for an environment (local, develop, production),
 **When** the blog needs to request posts,
-**Then** the request uses the API base from VITE_BLOG_API_BASE (no hardcoded production URLs in code) (FR5, FR6, NFR-I1).
+**Then** the request uses the API base derived from the current frontend host via `getBlogApiBaseUrl()` (no hardcoded production URLs in code) (FR5, FR6, NFR-I1).
 **And** host-to-API-base mapping is documented (e.g. in README or architecture).
 
 **Given** the SonicJS API is available,

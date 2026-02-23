@@ -1,7 +1,29 @@
-import { describe, it, expect, beforeEach } from "vitest";
+import { describe, it, expect, beforeEach, vi } from "vitest";
 import { render, screen, waitFor, cleanup } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import App from "./App";
+import * as blogApi from "./utils/blogApi";
+
+vi.mock("./utils/blogApi", () => ({
+    fetchBlogPosts: vi.fn().mockResolvedValue({
+        ok: true,
+        data: [],
+        pagination: { page: 1, limit: 20, total: 0, totalPages: 1 },
+    }),
+}));
+
+const testQueryClient = new QueryClient({
+    defaultOptions: { queries: { retry: false } },
+});
+
+function renderApp() {
+    return render(
+        <QueryClientProvider client={testQueryClient}>
+            <App />
+        </QueryClientProvider>,
+    );
+}
 
 describe("App", () => {
     beforeEach(() => {
@@ -9,14 +31,21 @@ describe("App", () => {
         cleanup();
         // Reset window.history to initial state
         window.history.pushState({}, "", "/");
+        vi.mocked(blogApi.fetchBlogPosts).mockResolvedValue({
+            ok: true,
+            data: [],
+            pagination: { page: 1, limit: 20, total: 0, totalPages: 1 },
+        });
     });
 
-    it("renders without crashing", () => {
-        render(<App />);
+    it("renders without crashing", async () => {
+        renderApp();
+        await screen.findByRole("region", { name: /blog/i });
     });
 
-    it("renders the home page by default", () => {
-        render(<App />);
+    it("renders the home page by default", async () => {
+        renderApp();
+        await screen.findByRole("region", { name: /blog/i });
         expect(screen.getByText("AI Engineering Path")).toBeInTheDocument();
         expect(screen.getByText("Projects")).toBeInTheDocument();
         expect(screen.getByText("Resume")).toBeInTheDocument();
@@ -30,7 +59,8 @@ describe("App", () => {
 
     it("navigates to resume page when clicked", async () => {
         const user = userEvent.setup();
-        render(<App />);
+        renderApp();
+        await screen.findByRole("region", { name: /blog/i });
 
         // Click on the Resume link
         const resumeLink = screen.getByRole("link", { name: /resume/i });
@@ -45,7 +75,8 @@ describe("App", () => {
 
     it("navigates to projects page when clicked", async () => {
         const user = userEvent.setup();
-        render(<App />);
+        renderApp();
+        await screen.findByRole("region", { name: /blog/i });
 
         const projectsLink = screen.getByRole("link", { name: /projects/i });
         await user.click(projectsLink);
@@ -59,7 +90,8 @@ describe("App", () => {
 
     it("navigates to ai-engineering-path page when clicked", async () => {
         const user = userEvent.setup();
-        render(<App />);
+        renderApp();
+        await screen.findByRole("region", { name: /blog/i });
 
         // Click on the AI Engineering Path link
         const aiEngineeringLink = screen.getByRole("link", {
@@ -77,7 +109,8 @@ describe("App", () => {
 
     it("navigates back to home from resume page", async () => {
         const user = userEvent.setup();
-        render(<App />);
+        renderApp();
+        await screen.findByRole("region", { name: /blog/i });
 
         // Navigate to resume
         const resumeLink = screen.getByRole("link", { name: /resume/i });

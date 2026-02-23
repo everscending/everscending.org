@@ -2,6 +2,21 @@
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
+## Blog API (SonicJS) — host-derived URL
+
+The blog section loads posts from a SonicJS API. The API base URL is derived at runtime from the current frontend hostname/port via `getBlogApiBaseUrl()` in `src/utils/blogApi.ts`. No environment variable is required.
+
+**Host → blog API base mapping:**
+
+| Frontend host | Blog API base URL |
+|---------------|-------------------|
+| `localhost:5173` | `http://localhost:8787/api/blog` |
+| `develop.everscending-org.pages.dev` | `https://develop-everscending-blog.everscending.workers.dev/api/blog` |
+| `everscending-org.pages.dev` | `https://everscending-blog.everscending.workers.dev/api/blog` |
+| `everscending.org` | `https://everscending-blog.everscending.workers.dev/api/blog` |
+| `everscending-web.everscending.workers.dev` | `https://everscending-blog.everscending.workers.dev/api/blog` |
+| `everscending.ai` | `https://everscending-blog.everscending.workers.dev/api/blog` |
+
 Currently, two official plugins are available:
 
 - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
