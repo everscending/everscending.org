@@ -18,6 +18,24 @@
     font-size: 1rem;
 }
 
+.blog-section__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+}
+
+.blog-section__empty,
+.blog-section__error {
+    margin: 0;
+    color: var(--primary-text);
+    font-size: 1rem;
+}
+
+.blog-section__error {
+    color: var(--accent-orange);
+}
+
 .blog-section:focus-within {
     outline: none;
 }

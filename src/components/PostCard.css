@@ -1,0 +1,33 @@
+.post-card {
+    list-style: none;
+    margin: 0 0 0.75rem 0;
+    padding: 0;
+}
+
+.post-card:last-child {
+    margin-bottom: 0;
+}
+
+.post-card__link {
+    display: block;
+    text-align: left;
+    color: var(--link-color);
+    text-decoration: none;
+}
+
+.post-card__link:hover {
+    color: var(--link-hover-color);
+}
+
+.post-card__title {
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.post-card__excerpt {
+    display: block;
+    margin: 0.25rem 0 0 0;
+    font-size: 0.9rem;
+    color: var(--primary-text);
+    font-weight: normal;
+}
