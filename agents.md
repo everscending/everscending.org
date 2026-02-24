@@ -23,6 +23,7 @@ A comprehensive reference guide for understanding, modifying, and extending the 
 **everscending.org** is a personal portfolio website showcasing:
 
 - Professional resume
+- Blog (front-page section, in-app post view; post body HTML sanitized with DOMPurify)
 - AI Engineering learning resources
 - Interactive AI agent demonstrations (via Gradio embeds)
 - Personal branding and navigation

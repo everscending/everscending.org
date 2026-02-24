@@ -1,0 +1,75 @@
+/* Blog post page - uses App.css variables and container patterns */
+.blog-post-page {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+    color: var(--primary-text);
+    text-align: left;
+}
+
+.blog-post-page__loading,
+.blog-post-page__error {
+    margin: 0;
+    font-size: 1rem;
+    color: var(--primary-text);
+}
+
+.blog-post-page__error {
+    color: var(--accent-orange);
+}
+
+.blog-post-page__header {
+    margin: 0 0 1.5rem 0;
+}
+
+.blog-post-page__title {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.75rem;
+    color: var(--accent-yellow);
+}
+
+.blog-post-page__excerpt {
+    margin: 0 0 0.5rem 0;
+    font-size: 1rem;
+    color: var(--primary-text);
+}
+
+.blog-post-page__meta {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--link-color);
+}
+
+.blog-post-page__content {
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.blog-post-page__content :first-child {
+    margin-top: 0;
+}
+
+.blog-post-page__content p {
+    margin: 0 0 1rem 0;
+}
+
+.blog-post-page__content a {
+    color: var(--link-color);
+}
+
+.blog-post-page__content a:hover {
+    color: var(--link-hover-color);
+}
+
+.blog-post-page__content h2,
+.blog-post-page__content h3 {
+    margin: 1.5rem 0 0.5rem 0;
+    color: var(--accent-yellow);
+}
+
+.blog-post-page__content ul,
+.blog-post-page__content ol {
+    margin: 0 0 1rem 0;
+    padding-left: 1.5rem;
+}

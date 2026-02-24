@@ -1,6 +1,7 @@
 import React from "react";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import BlogSection from "./BlogSection";
 import * as blogApi from "../utils/blogApi";
@@ -21,7 +22,9 @@ function createTestQueryClient() {
 function renderWithClient(ui: React.ReactElement): ReturnType<typeof render> {
     const client = createTestQueryClient();
     return render(
-        <QueryClientProvider client={client}>{ui}</QueryClientProvider>,
+        <QueryClientProvider client={client}>
+            <MemoryRouter>{ui}</MemoryRouter>
+        </QueryClientProvider>,
     );
 }
 
@@ -47,15 +50,15 @@ describe("BlogSection", () => {
         vi.clearAllMocks();
     });
 
-    it("calls fetchBlogPosts with page 1 and limit 20", async () => {
+    it("calls fetchBlogPosts with page 1 and limit 2", async () => {
         mockFetchBlogPosts.mockResolvedValueOnce({
             ok: true,
             data: [],
-            pagination: { page: 1, limit: 20, total: 0, totalPages: 1 },
+            pagination: { page: 1, limit: 2, total: 0, totalPages: 1 },
         });
         renderWithClient(<BlogSection />);
         await screen.findByText(/no posts yet/i);
-        expect(mockFetchBlogPosts).toHaveBeenCalledWith({ page: 1, limit: 20 });
+        expect(mockFetchBlogPosts).toHaveBeenCalledWith({ page: 1, limit: 2 });
     });
 
     it("renders a section with aria-label Blog", async () => {
@@ -139,13 +142,10 @@ describe("BlogSection", () => {
             pagination: { page: 1, limit: 20, total: 2, totalPages: 1 },
         });
         renderWithClient(<BlogSection />);
-        await screen.findByRole("link", { name: /first post/i });
-        expect(
-            screen.getByRole("link", { name: /first post/i }),
-        ).toHaveAttribute("href", "/blog/first-post");
-        expect(
-            screen.getByRole("link", { name: /second post/i }),
-        ).toHaveAttribute("href", "/blog/second-post");
+        const links = await screen.findAllByRole("link");
+        expect(links).toHaveLength(2);
+        expect(links[0]).toHaveAttribute("href", "/blog/first-post");
+        expect(links[1]).toHaveAttribute("href", "/blog/second-post");
         const list = screen.getByRole("list");
         expect(list).toBeInTheDocument();
         expect(list.querySelectorAll("li").length).toBe(2);

@@ -7,8 +7,9 @@ import "./BlogSection.css";
 const BLOG_POSTS_QUERY_KEY = ["blog", "posts"] as const;
 const BLOG_ERROR_MESSAGE = "Couldn't load posts";
 
+/** Home-section preview: limit < 20 is valid during development; architecture default is 20 for full list/pagination. */
 function blogPostsQueryFn() {
-    return fetchBlogPosts({ page: 1, limit: 20 }).then((result) => {
+    return fetchBlogPosts({ page: 1, limit: 2 }).then((result) => {
         if (!result.ok) throw new Error(result.error);
         return result;
     });
@@ -16,7 +17,7 @@ function blogPostsQueryFn() {
 
 const BlogSection = () => {
     const { data, isLoading, isError, error } = useQuery({
-        queryKey: [...BLOG_POSTS_QUERY_KEY, { page: 1, limit: 20 }],
+        queryKey: [...BLOG_POSTS_QUERY_KEY, { page: 1, limit: 2 }],
         queryFn: blogPostsQueryFn,
     });
 

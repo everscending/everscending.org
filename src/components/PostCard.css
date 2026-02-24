@@ -19,6 +19,11 @@
     color: var(--link-hover-color);
 }
 
+.post-card__link:focus-visible {
+    outline: 2px solid var(--accent-orange);
+    outline-offset: 2px;
+}
+
 .post-card__title {
     font-weight: 600;
     font-size: 1.1rem;

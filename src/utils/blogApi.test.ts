@@ -1,6 +1,7 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 import {
     fetchBlogPosts,
+    fetchBlogPostBySlug,
     getBlogApiBaseUrl,
     mapSonicJSPostToBlogPost,
     type SonicJSPost,
@@ -334,6 +335,132 @@ describe("blogApi", () => {
                 excerpt: "",
                 link: "/blog/mypostx1",
             });
+        });
+    });
+
+    describe("fetchBlogPostBySlug", () => {
+        it("returns ok: true with data including content for successful response", async () => {
+            const raw: SonicJSPost = {
+                id: "id-1",
+                slug: "hello",
+                title: "Hello",
+                excerpt: "Excerpt",
+                content: "<p>Hello <strong>world</strong></p>",
+                featuredImage: "/img.jpg",
+                author: "Jordan",
+                publishedAt: "2026-01-01",
+                status: "published",
+                tags: "meta",
+            };
+            (global.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
+                ok: true,
+                json: async () => ({ success: true, data: raw }),
+            });
+            const result = await fetchBlogPostBySlug("hello");
+            expect(result).toEqual({
+                ok: true,
+                data: {
+                    id: "id-1",
+                    slug: "hello",
+                    title: "Hello",
+                    excerpt: "Excerpt",
+                    link: "/blog/hello",
+                    content: "<p>Hello <strong>world</strong></p>",
+                    author: "Jordan",
+                    publishedAt: "2026-01-01",
+                },
+            });
+        });
+
+        it("returns ok: false with Post not found for HTTP 404", async () => {
+            (global.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
+                ok: false,
+                status: 404,
+            });
+            const result = await fetchBlogPostBySlug("missing");
+            expect(result).toEqual({
+                ok: false,
+                error: "Post not found",
+            });
+        });
+
+        it("returns ok: false with Post not found when success is false and no data", async () => {
+            (global.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
+                ok: true,
+                json: async () => ({ success: false }),
+            });
+            const result = await fetchBlogPostBySlug("missing");
+            expect(result).toEqual({
+                ok: false,
+                error: "Post not found",
+            });
+        });
+
+        it("returns ok: false with Couldn't load post for 5xx", async () => {
+            (global.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
+                ok: false,
+                status: 500,
+            });
+            const result = await fetchBlogPostBySlug("any");
+            expect(result).toEqual({
+                ok: false,
+                error: "Couldn't load post",
+            });
+        });
+
+        it("returns ok: false with Couldn't load post on network error", async () => {
+            (global.fetch as ReturnType<typeof vi.fn>).mockRejectedValueOnce(
+                new Error("Network error"),
+            );
+            const result = await fetchBlogPostBySlug("any");
+            expect(result).toEqual({
+                ok: false,
+                error: "Couldn't load post",
+            });
+        });
+
+        it("calls GET posts/:slug with slug in path", async () => {
+            (global.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
+                ok: true,
+                json: async () => ({
+                    success: true,
+                    data: {
+                        id: "1",
+                        slug: "my-post",
+                        title: "Title",
+                        excerpt: "",
+                        content: "",
+                        featuredImage: "",
+                        author: "",
+                        publishedAt: "",
+                        status: "",
+                        tags: "",
+                    },
+                }),
+            });
+            await fetchBlogPostBySlug("my-post");
+            expect(global.fetch).toHaveBeenCalledWith(
+                "http://localhost:8787/api/blog/posts/my-post",
+                expect.objectContaining({ method: "GET" }),
+            );
+        });
+
+        it("returns ok: false with Post not found for empty slug and does not call fetch", async () => {
+            const result = await fetchBlogPostBySlug("");
+            expect(result).toEqual({
+                ok: false,
+                error: "Post not found",
+            });
+            expect(global.fetch).not.toHaveBeenCalled();
+        });
+
+        it("returns ok: false with Post not found for slug with unsafe characters and does not call fetch", async () => {
+            const result = await fetchBlogPostBySlug("hello/world");
+            expect(result).toEqual({
+                ok: false,
+                error: "Post not found",
+            });
+            expect(global.fetch).not.toHaveBeenCalled();
         });
     });
 });
