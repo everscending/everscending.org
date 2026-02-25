@@ -223,6 +223,9 @@ describe("BlogSection", () => {
         expect(
             await screen.findByText(/couldn't load posts/i),
         ).toBeInTheDocument();
+        expect(
+            screen.getByRole("heading", { name: /couldn't load posts/i }),
+        ).toBeInTheDocument();
     });
 
     it("shows custom error message from API in UI", async () => {
@@ -584,5 +587,104 @@ describe("BlogSection", () => {
         expect(
             await screen.findByText(/couldn't load posts/i),
         ).toBeInTheDocument();
+    });
+
+    it("when API fails, error message is shown and list/pagination/empty/loading are not", async () => {
+        mockFetchBlogPosts.mockResolvedValueOnce({
+            ok: false,
+            error: "Couldn't load posts",
+        });
+        renderWithClient(<BlogSection />);
+        const errorHeading = await screen.findByRole("heading", {
+            name: /couldn't load posts/i,
+        });
+        expect(errorHeading).toBeInTheDocument();
+        expect(screen.queryByRole("list")).not.toBeInTheDocument();
+        expect(
+            screen.queryByRole("button", { name: /first page/i }),
+        ).not.toBeInTheDocument();
+        expect(screen.queryByText(/no posts yet/i)).not.toBeInTheDocument();
+        expect(
+            screen.queryByText(/loading/i, { exact: false }),
+        ).not.toBeInTheDocument();
+    });
+
+    it("when API returns success with posts, error message is not shown", async () => {
+        mockFetchBlogPosts.mockResolvedValueOnce({
+            ok: true,
+            data: mockPosts,
+            pagination: { page: 1, limit: 10, total: 2, totalPages: 1 },
+        });
+        renderWithClient(<BlogSection />);
+        await screen.findByRole("list");
+        expect(
+            screen.queryByRole("heading", { name: /couldn't load posts/i }),
+        ).not.toBeInTheDocument();
+        expect(
+            screen.queryByText(/couldn't load posts/i),
+        ).not.toBeInTheDocument();
+    });
+
+    it("when API returns success with empty array, error message is not shown", async () => {
+        mockFetchBlogPosts.mockResolvedValueOnce({
+            ok: true,
+            data: [],
+            pagination: { page: 1, limit: 10, total: 0, totalPages: 0 },
+        });
+        renderWithClient(<BlogSection />);
+        await screen.findByText(/no posts yet/i);
+        expect(
+            screen.queryByRole("heading", { name: /couldn't load posts/i }),
+        ).not.toBeInTheDocument();
+        expect(
+            screen.queryByText(/couldn't load posts/i),
+        ).not.toBeInTheDocument();
+    });
+
+    it("error state includes focusable retry button", async () => {
+        mockFetchBlogPosts.mockResolvedValueOnce({
+            ok: false,
+            error: "Couldn't load posts",
+        });
+        renderWithClient(<BlogSection />);
+        await screen.findByRole("heading", { name: /couldn't load posts/i });
+        const retryBtn = screen.getByRole("button", {
+            name: /retry loading posts/i,
+        });
+        expect(retryBtn).toBeInTheDocument();
+        expect(retryBtn).not.toBeDisabled();
+    });
+
+    it("shows error when fetch rejects (e.g. network throw)", async () => {
+        mockFetchBlogPosts.mockRejectedValueOnce(new Error("Network error"));
+        renderWithClient(<BlogSection />);
+        await screen.findByText(/network error/i);
+        expect(
+            screen.getByRole("heading", { name: /network error/i }),
+        ).toBeInTheDocument();
+    });
+
+    it("retry button triggers refetch", async () => {
+        mockFetchBlogPosts
+            .mockResolvedValueOnce({
+                ok: false,
+                error: "Couldn't load posts",
+            })
+            .mockResolvedValueOnce({
+                ok: true,
+                data: mockPosts,
+                pagination: { page: 1, limit: 10, total: 2, totalPages: 1 },
+            });
+        renderWithClient(<BlogSection />);
+        await screen.findByRole("heading", { name: /couldn't load posts/i });
+        expect(mockFetchBlogPosts).toHaveBeenCalledTimes(1);
+        const retryBtn = screen.getByRole("button", {
+            name: /retry loading posts/i,
+        });
+        await act(async () => {
+            retryBtn.click();
+        });
+        await screen.findByRole("list");
+        expect(mockFetchBlogPosts).toHaveBeenCalledTimes(2);
     });
 });

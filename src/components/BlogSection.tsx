@@ -42,7 +42,7 @@ const BlogSection = () => {
     const [page, setPage] = useState(DEFAULT_PAGE);
     const limit = DEFAULT_LIMIT;
 
-    const { data, isLoading, isError, error } = useQuery({
+    const { data, isLoading, isError, error, refetch } = useQuery({
         queryKey: [...BLOG_POSTS_QUERY_KEY, { page, limit }],
         queryFn: blogPostsQueryFn,
     });
@@ -146,7 +146,19 @@ const BlogSection = () => {
             {isEmpty && !isError && (
                 <h2 className="blog-section__empty">No posts yet</h2>
             )}
-            {isError && <p className="blog-section__error">{errorMessage}</p>}
+            {isError && (
+                <div className="blog-section__error-wrapper">
+                    <h2 className="blog-section__error">{errorMessage}</h2>
+                    <button
+                        type="button"
+                        className="blog-section__retry"
+                        aria-label="Retry loading posts"
+                        onClick={() => refetch()}
+                    >
+                        Try again
+                    </button>
+                </div>
+            )}
         </section>
     );
 };

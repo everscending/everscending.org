@@ -1,4 +1,5 @@
 .outer-container #footer {
+    margin: 20px 0px 0px 0px;
     & .nav-link {
         display: inline;
         font-size: 14pt;
