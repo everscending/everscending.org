@@ -5,6 +5,10 @@
 
 const DEFAULT_TIMEOUT_MS = 10_000;
 
+/** Default page and limit for blog list requests (e.g. home section preview). */
+export const DEFAULT_PAGE = 1;
+export const DEFAULT_LIMIT = 2;
+
 /** User-facing error message for HTTP/network failures (avoids exposing raw status in UI). */
 const BLOG_LOAD_ERROR_MESSAGE = "Couldn't load posts";
 
@@ -165,8 +169,8 @@ export async function fetchBlogPosts(params?: {
     page?: number;
     limit?: number;
 }): Promise<FetchBlogPostsResult> {
-    const page = params?.page ?? 1;
-    const limit = params?.limit ?? 20;
+    const page = params?.page ?? DEFAULT_PAGE;
+    const limit = params?.limit ?? DEFAULT_LIMIT;
     const base = getBlogApiBaseUrl();
     if (!base) {
         return { ok: false, error: "Unknown host for blog API" };

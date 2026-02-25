@@ -6,12 +6,6 @@
     color: var(--primary-text);
 }
 
-.blog-section__heading {
-    color: var(--accent-yellow);
-    font-size: 1.5rem;
-    margin: 0 0 0.75rem 0;
-}
-
 .blog-section__loading {
     margin: 0;
     color: var(--primary-text);
@@ -40,14 +34,51 @@
     outline: none;
 }
 
-.blog-section:focus-visible {
-    outline: 2px solid var(--accent-orange);
-    outline-offset: 2px;
-}
-
 .blog-section [tabindex]:focus-visible,
 .blog-section a:focus-visible,
 .blog-section button:focus-visible {
     outline: 2px solid var(--accent-orange);
     outline-offset: 2px;
+}
+
+/* Pagination */
+.blog-section__pagination {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+}
+
+.blog-section__pagination-btn {
+    padding: 0.35rem 0.75rem;
+    font-size: 1rem;
+    color: var(--primary-text);
+    background: transparent;
+    border: 1px solid var(--accent-orange);
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.blog-section__pagination-btn:hover:not(:disabled) {
+    background: rgba(233, 162, 62, 0.15);
+    color: var(--accent-yellow);
+}
+
+.blog-section__pagination-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.blog-section__pagination-page--current {
+    background: rgba(233, 162, 62, 0.25);
+    color: var(--accent-yellow);
+    font-weight: 600;
+}
+
+/* Touch targets on small viewports (UX: ~44×44px minimum) */
+@media (max-width: 700px) {
+    .blog-section__pagination-btn {
+        min-height: 44px;
+        min-width: 44px;
+    }
 }

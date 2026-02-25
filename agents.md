@@ -15,6 +15,9 @@ A comprehensive reference guide for understanding, modifying, and extending the 
 9. [Development Workflow](#development-workflow)
 10. [Testing](#testing)
 11. [Modification Guide](#modification-guide)
+12. [Key Patterns & Conventions](#key-patterns--conventions)
+13. [Deployment Considerations](#deployment-considerations)
+14. [Troubleshooting](#troubleshooting)
 
 ---
 
@@ -774,6 +777,16 @@ export default ComponentName;
 - **URLs**: kebab-case (`/ai-engineering-path`)
 - **Route paths**: Match component purpose
 - **404 handling**: Redirect to home via catch-all route
+
+### Completion Notes (story work)
+
+When marking a story **done** (e.g. in `_bmad-output/implementation-artifacts` story files), completion notes must include **brief behavioral and layout changes** so reviewers and future work can see what actually changed beyond the file list.
+
+- **Include:**
+  - **Behavioral changes**: What the user or system does differently (e.g. "Clicking a post opens `/blog/:slug` and shows full post"; "Previous is disabled on page 1").
+  - **Layout/UX changes**: Visible changes (e.g. "Pagination shows up to 5 page numbers with current page highlighted"; "Error state replaces list instead of showing list + error").
+- **Avoid:** Only "All tasks done" or a raw file list with no summary of observable changes.
+- **Why:** Improves code review, handoff between stories, and agent consistency; gives a single place per story that states what changed for the user or system.
 
 ---
 

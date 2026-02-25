@@ -5,13 +5,17 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import App from "./App";
 import * as blogApi from "./utils/blogApi";
 
-vi.mock("./utils/blogApi", () => ({
-    fetchBlogPosts: vi.fn().mockResolvedValue({
-        ok: true,
-        data: [],
-        pagination: { page: 1, limit: 10, total: 0, totalPages: 1 },
-    }),
-}));
+vi.mock("./utils/blogApi", async (importOriginal) => {
+    const actual = await importOriginal<typeof import("./utils/blogApi")>();
+    return {
+        ...actual,
+        fetchBlogPosts: vi.fn().mockResolvedValue({
+            ok: true,
+            data: [],
+            pagination: { page: 1, limit: 10, total: 0, totalPages: 1 },
+        }),
+    };
+});
 
 const testQueryClient = new QueryClient({
     defaultOptions: { queries: { retry: false } },
@@ -51,9 +55,6 @@ describe("App", () => {
         expect(screen.getByText("Resume")).toBeInTheDocument();
         expect(
             screen.getByRole("region", { name: /blog/i }),
-        ).toBeInTheDocument();
-        expect(
-            screen.getByRole("heading", { name: /blog/i }),
         ).toBeInTheDocument();
     });
 
