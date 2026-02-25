@@ -144,7 +144,7 @@ const BlogSection = () => {
                 </nav>
             )}
             {isEmpty && !isError && (
-                <p className="blog-section__empty">No posts yet</p>
+                <h2 className="blog-section__empty">No posts yet</h2>
             )}
             {isError && <p className="blog-section__error">{errorMessage}</p>}
         </section>

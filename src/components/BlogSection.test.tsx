@@ -165,6 +165,53 @@ describe("BlogSection", () => {
         });
         renderWithClient(<BlogSection />);
         expect(await screen.findByText(/no posts yet/i)).toBeInTheDocument();
+        expect(
+            screen.getByRole("heading", { name: /no posts yet/i }),
+        ).toBeInTheDocument();
+    });
+
+    it("when API returns success with empty array, empty message is shown and list/pagination are not", async () => {
+        mockFetchBlogPosts.mockResolvedValueOnce({
+            ok: true,
+            data: [],
+            pagination: { page: 1, limit: 10, total: 0, totalPages: 0 },
+        });
+        renderWithClient(<BlogSection />);
+        await screen.findByText(/no posts yet/i);
+        expect(
+            screen.getByRole("heading", { name: /no posts yet/i }),
+        ).toBeInTheDocument();
+        expect(screen.queryByRole("list")).not.toBeInTheDocument();
+        expect(
+            screen.queryByRole("button", { name: /first page/i }),
+        ).not.toBeInTheDocument();
+        expect(
+            screen.queryByText(/loading/i, { exact: false }),
+        ).not.toBeInTheDocument();
+        expect(
+            screen.queryByText(/couldn't load posts/i),
+        ).not.toBeInTheDocument();
+    });
+
+    it("when API returns error, empty message is not shown", async () => {
+        mockFetchBlogPosts.mockResolvedValueOnce({
+            ok: false,
+            error: "Couldn't load posts",
+        });
+        renderWithClient(<BlogSection />);
+        await screen.findByText(/couldn't load posts/i);
+        expect(screen.queryByText(/no posts yet/i)).not.toBeInTheDocument();
+    });
+
+    it("when API returns posts, empty message is not shown", async () => {
+        mockFetchBlogPosts.mockResolvedValueOnce({
+            ok: true,
+            data: mockPosts,
+            pagination: { page: 1, limit: 10, total: 2, totalPages: 1 },
+        });
+        renderWithClient(<BlogSection />);
+        await screen.findByRole("list");
+        expect(screen.queryByText(/no posts yet/i)).not.toBeInTheDocument();
     });
 
     it("shows error message when fetch fails", async () => {
