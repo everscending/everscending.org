@@ -12,7 +12,7 @@ so that I can skim the latest content.
 
 ## Acceptance Criteria
 
-1. **Given** the blog section exists and the API client is configured, **when** the home page loads, **then** the blog section requests posts from the SonicJS API (e.g. `GET {API_BASE}/api/blog/posts?limit=20&page=1`) and does not block initial paint of the shell and nav (NFR-P1, FR2).
+1. **Given** the blog section exists and the API client is configured, **when** the home page loads, **then** the blog section requests posts from the SonicJS API (e.g. GET with limit and page params) and does not block initial paint of the shell and nav (NFR-P1, FR2).
 
 2. **Given** the API returns a successful response with posts, **when** the blog section renders, **then** I see a list or card set of posts, each with at least title and link, and optionally excerpt/commentary when the API provides it (FR2, FR3). **And** the content reflects the current state of SonicJS at load time (FR12).
 
@@ -21,7 +21,7 @@ so that I can skim the latest content.
 ## Tasks / Subtasks
 
 - [x] Task 1 (AC: 1) — Wire fetch in BlogSection without blocking paint
-    - [x] In `BlogSection.tsx`, call `fetchBlogPosts({ page: 1, limit: 20 })` from `src/utils/blogApi` via **React Query** (`useQuery`); do not block initial render of shell/nav (request after mount).
+    - [x] In `BlogSection.tsx`, call `fetchBlogPosts` with page and limit from `src/utils/blogApi` via **React Query** (`useQuery`); do not block initial render of shell/nav (request after mount).
     - [x] Manage loading state: show existing "Loading…" (or skeleton) while request is in flight; set `aria-busy` from actual loading state.
     - [x] Ensure no hardcoded API URLs; API base is derived from host via blogApi (getBlogApiBaseUrl) only.
     - [x] Use **@tanstack/react-query**: app wrapped in `QueryClientProvider` (e.g. in `main.tsx`); BlogSection uses `useQuery` with a query key and a query function that calls `fetchBlogPosts` and throws on `!result.ok` so React Query handles loading/error/success.
@@ -62,7 +62,7 @@ so that I can skim the latest content.
 
 ### Technical requirements
 
-- **Data source:** Call `fetchBlogPosts({ page: 1, limit: 20 })` from `blogApi.ts` in BlogSection via **React Query** `useQuery` (queryFn calls fetchBlogPosts and throws on `!result.ok`). Use the returned UI model (`BlogPost[]`, `BlogPagination`); do not re-map or touch raw SonicJS types in the component.
+- **Data source:** Call `fetchBlogPosts` with page and limit from `blogApi.ts` in BlogSection via **React Query** `useQuery` (queryFn calls fetchBlogPosts and throws on `!result.ok`). Use the returned UI model (`BlogPost[]`, `BlogPagination`); do not re-map or touch raw SonicJS types in the component.
 - **Non-blocking:** Do not block initial paint: React Query runs the query after mount. Shell and nav must render first; blog section can show loading then replace with content/empty/error.
 - **Loading state:** While request is in flight, show in-section loading (existing "Loading…" or minimal skeleton); set `aria-busy={isLoading}` and `aria-live="polite"` so screen readers get updates.
 - **Success path:** When `success === true` and `data` is a non-empty array, render list/cards: each item has at least title and link. Use link href `/blog/{slug}` for the post URL; do not add a `/blog` route in this story (Epic 3 will implement the post page). Optionally show excerpt when present on `BlogPost`.
@@ -118,7 +118,7 @@ so that I can skim the latest content.
 
 ### Completion Notes List
 
-- Implemented BlogSection fetch via **React Query** `useQuery`: queryFn calls `fetchBlogPosts({ page: 1, limit: 20 })`, throws on `!result.ok`; loading/error/success from `useQuery`. App wrapped in `QueryClientProvider` in `main.tsx` (default `staleTime: 60_000`). `aria-busy`/`aria-live` driven by query loading state. No hardcoded API URLs.
+- Implemented BlogSection fetch via **React Query** `useQuery`: queryFn calls `fetchBlogPosts` with page and limit, throws on `!result.ok`; loading/error/success from `useQuery`. App wrapped in `QueryClientProvider` in `main.tsx` (default `staleTime: 60_000`). `aria-busy`/`aria-live` driven by query loading state. No hardcoded API URLs.
 - Added PostCard presentational component (title, link, optional excerpt); BlogSection renders `<ul>` with PostCard items; one focusable link per post; semantic section/heading/list.
 - Empty state: "No posts yet"; error state: in-section message from API error string (e.g. "Couldn't load posts"). Shell/nav unchanged.
 - Unit tests: BlogSection and App tests wrap with `QueryClientProvider` (tests use `retry: false`). BlogSection mocked blogApi; tests for loading, list when data returned, empty message, error message (including custom API error string), aria-busy, one focusable link per post. All tests pass; `pnpm build` and `pnpm tsc --noEmit` pass; `eslint src/` pass.

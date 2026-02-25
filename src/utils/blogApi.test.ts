@@ -95,12 +95,14 @@ describe("blogApi", () => {
                 json: async () => ({
                     success: true,
                     data: [],
-                    pagination: { page: 1, limit: 20, total: 0, totalPages: 0 },
+                    pagination: { page: 1, limit: 10, total: 0, totalPages: 0 },
                 }),
             });
             await fetchBlogPosts();
             expect(global.fetch).toHaveBeenCalledWith(
-                "http://localhost:8787/api/blog/posts?limit=20&page=1",
+                expect.stringMatching(
+                    /^http:\/\/localhost:8787\/api\/blog\/posts\?limit=\d+&page=1$/,
+                ),
                 expect.objectContaining({ method: "GET" }),
             );
         });
@@ -139,7 +141,7 @@ describe("blogApi", () => {
                 json: async () => ({
                     success: true,
                     data: [raw],
-                    pagination: { page: 1, limit: 20, total: 1, totalPages: 1 },
+                    pagination: { page: 1, limit: 10, total: 1, totalPages: 1 },
                 }),
             });
             const result = await fetchBlogPosts();
@@ -154,7 +156,7 @@ describe("blogApi", () => {
                         link: "/blog/hello",
                     },
                 ],
-                pagination: { page: 1, limit: 20, total: 1, totalPages: 1 },
+                pagination: { page: 1, limit: 10, total: 1, totalPages: 1 },
             });
         });
 

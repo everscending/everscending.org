@@ -9,7 +9,7 @@ vi.mock("./utils/blogApi", () => ({
     fetchBlogPosts: vi.fn().mockResolvedValue({
         ok: true,
         data: [],
-        pagination: { page: 1, limit: 20, total: 0, totalPages: 1 },
+        pagination: { page: 1, limit: 10, total: 0, totalPages: 1 },
     }),
 }));
 
@@ -34,7 +34,7 @@ describe("App", () => {
         vi.mocked(blogApi.fetchBlogPosts).mockResolvedValue({
             ok: true,
             data: [],
-            pagination: { page: 1, limit: 20, total: 0, totalPages: 1 },
+            pagination: { page: 1, limit: 10, total: 0, totalPages: 1 },
         });
     });
 

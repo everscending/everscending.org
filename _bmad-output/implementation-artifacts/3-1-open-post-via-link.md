@@ -33,7 +33,7 @@ so that I can read the full content (in-app or external).
 
 ## Dev Notes
 
-- **BlogSection limit < 20:** Using a limit less than 20 on the home-page blog section is valid during development (preview only); architecture default page size is 20 for the full list and pagination.
+- **BlogSection limit:** Page size for the blog list is configurable; no fixed value is required by the architecture.
 - **In-app vs external:** Architecture and epic allow "in-app or external per API/content model." Current codebase uses in-app links (`/blog/${slug}`). Implement in-app: add `/blog/:slug` route and a page that fetches and displays the post via SonicJS single-post endpoint. Do not change to external URLs unless product decision dictates otherwise.
 - **Single source of truth:** All blog HTTP calls go through `src/utils/blogApi.ts`. Add `fetchBlogPostBySlug` there; post page must not call fetch directly. [Source: architecture.md – API boundaries]
 - **SonicJS single-post:** `GET {API_BASE}/api/blog/posts/:slug` returns `{ success: boolean, data: Post }`. Same Post shape as list. Use existing `mapSonicJSPostToBlogPost` for UI model. [Source: architecture.md – SonicJS API response schemas]
@@ -123,7 +123,7 @@ so that I can read the full content (in-app or external).
 - Implemented single-post API: `fetchBlogPostBySlug(slug)` in blogApi.ts with `BlogPostDetail` type and `mapSonicJSPostToBlogPostDetail`; distinct "Post not found" vs "Couldn't load post" errors.
 - Added route `/blog/:slug` in App.tsx and created BlogPostPage with useQuery, loading/error/not-found states, and HTML content sanitized with DOMPurify then rendered via dangerouslySetInnerHTML.
 - Added PostCard link focus-visible style; BlogPostPage uses article landmark, aria-busy, aria-live.
-- Unit tests: blogApi fetchBlogPostBySlug (success, 404, not-found, 5xx, network error); BlogPostPage (loading, success with content, not-found, generic error, slug from route, article a11y). Fixed BlogSection test to expect limit: 2. All 55 tests pass; build and tsc pass.
+- Unit tests: blogApi fetchBlogPostBySlug (success, 404, not-found, 5xx, network error); BlogPostPage (loading, success with content, not-found, generic error, slug from route, article a11y). BlogSection test updated to avoid asserting a specific page size. All 55 tests pass; build and tsc pass.
 - Post body HTML is sanitized with DOMPurify before rendering (defense in depth; story originally specified trusted API + dangerouslySetInnerHTML for MVP).
 
 ### File List

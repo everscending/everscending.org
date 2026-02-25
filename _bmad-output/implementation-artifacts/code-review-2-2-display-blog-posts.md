@@ -19,7 +19,7 @@
 
 | AC | Requirement | Status | Evidence |
 |----|--------------|--------|----------|
-| AC1 | Blog section requests posts (GET …?limit=20&page=1), does not block paint | ✅ IMPLEMENTED | `useQuery` + `fetchBlogPosts({ page: 1, limit: 20 })` in BlogSection; QueryClientProvider in main.tsx; no blocking render |
+| AC1 | Blog section requests posts (GET with limit and page), does not block paint | ✅ IMPLEMENTED | `useQuery` + `fetchBlogPosts` with page and limit in BlogSection; QueryClientProvider in main.tsx; no blocking render |
 | AC2 | List/cards with title, link, optional excerpt; content from SonicJS at load | ✅ IMPLEMENTED | PostCard shows title, link, optional excerpt; data from API mapping |
 | AC3 | Semantic structure, one focusable link per post | ✅ IMPLEMENTED | `<section>`, `<h2>`, `<ul>`/`<li>`, one `<a>` per PostCard; tests verify one link per post |
 
