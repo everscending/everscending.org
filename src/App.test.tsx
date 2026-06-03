@@ -18,7 +18,7 @@ describe("App", () => {
     it("renders the home page by default", () => {
         render(<App />);
         expect(screen.getByText("AI Engineering Path")).toBeInTheDocument();
-        expect(screen.getByText("Agentic Digital Twin")).toBeInTheDocument();
+        expect(screen.getByText("Projects")).toBeInTheDocument();
         expect(screen.getByText("Resume")).toBeInTheDocument();
     });
 
@@ -37,20 +37,16 @@ describe("App", () => {
         expect(screen.getByText("Professional Experience")).toBeInTheDocument();
     });
 
-    it("navigates to agentic-twin page when clicked", async () => {
+    it("navigates to projects page when clicked", async () => {
         const user = userEvent.setup();
         render(<App />);
 
-        // Click on the Agentic Digital Twin link
-        const agenticLink = screen.getByRole("link", {
-            name: /agentic digital twin/i,
-        });
-        await user.click(agenticLink);
+        const projectsLink = screen.getByRole("link", { name: /projects/i });
+        await user.click(projectsLink);
 
-        // Verify AgenticTwin page content is displayed
         await waitFor(() => {
             expect(
-                screen.getByText("Welcome to my Agentic Digital Twin"),
+                screen.getByRole("link", { name: /agentic digital twin/i }),
             ).toBeInTheDocument();
         });
     });
