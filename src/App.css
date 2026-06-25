@@ -28,6 +28,10 @@ div.outer-container {
     flex-direction: column;
 }
 
+.outer-container .inner-container {
+    max-width: 100%; /* prevent flex item from exceeding viewport during resize */
+}
+
 h1 {
     color: var(--accent-orange);
 }

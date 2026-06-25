@@ -1,11 +1,13 @@
+/* Allow grid cell to shrink below content size (avoids overflow in grid layout) */
 .post-card {
     list-style: none;
-    margin: 0 0 0.75rem 0;
+    margin: 0;
     padding: 0;
-}
-
-.post-card:last-child {
-    margin-bottom: 0;
+    min-width: 0;
+    border: 1px solid var(--accent-orange);
+    border-radius: 5px;
+    padding: 0.5rem;
+    background-color: #ffffff18;
 }
 
 .post-card__link {
@@ -13,6 +15,8 @@
     text-align: left;
     color: var(--link-color);
     text-decoration: none;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 .post-card__link:hover {
@@ -22,6 +26,14 @@
 .post-card__link:focus-visible {
     outline: 2px solid var(--accent-orange);
     outline-offset: 2px;
+}
+
+.post-card__date {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--primary-text);
+    opacity: 0.85;
+    margin-bottom: 0.2rem;
 }
 
 .post-card__title {

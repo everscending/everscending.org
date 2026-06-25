@@ -154,6 +154,7 @@ describe("blogApi", () => {
                         title: "Hello",
                         excerpt: "Excerpt",
                         link: "/blog/hello",
+                        publishedAt: "2026-01-01",
                     },
                 ],
                 pagination: { page: 1, limit: 10, total: 1, totalPages: 1 },

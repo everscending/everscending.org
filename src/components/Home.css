@@ -6,9 +6,13 @@
     align-items: center;
 
     & div.inner-container {
+        min-width: 0; /* allow flex item to shrink so blog grid doesn’t cause horizontal scroll */
+
         & img.home-logo {
             height: 300px;
             margin-bottom: 20px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         & img.home-logo.desktop-logo {

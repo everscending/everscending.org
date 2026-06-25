@@ -5,9 +5,13 @@ import { MemoryRouter } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import BlogSection from "./BlogSection";
 import * as blogApi from "../utils/blogApi";
+import { DEFAULT_LIMIT } from "../utils/blogApi";
 import type { BlogPost } from "../utils/blogApi";
 
-vi.mock("../utils/blogApi");
+vi.mock("../utils/blogApi", async (importOriginal) => {
+    const actual = await importOriginal<typeof import("../utils/blogApi")>();
+    return { ...actual, fetchBlogPosts: vi.fn() };
+});
 
 const mockFetchBlogPosts = vi.mocked(blogApi.fetchBlogPosts);
 
@@ -243,7 +247,12 @@ describe("BlogSection", () => {
         mockFetchBlogPosts.mockResolvedValueOnce({
             ok: true,
             data: mockPosts,
-            pagination: { page: 1, limit: 2, total: 5, totalPages: 3 },
+            pagination: {
+                page: 1,
+                limit: DEFAULT_LIMIT,
+                total: 5,
+                totalPages: 2,
+            },
         });
         renderWithClient(<BlogSection />);
         await screen.findByRole("list");
@@ -287,7 +296,12 @@ describe("BlogSection", () => {
         mockFetchBlogPosts.mockResolvedValueOnce({
             ok: true,
             data: mockPosts,
-            pagination: { page: 1, limit: 2, total: 5, totalPages: 3 },
+            pagination: {
+                page: 1,
+                limit: DEFAULT_LIMIT,
+                total: 5,
+                totalPages: 2,
+            },
         });
         renderWithClient(<BlogSection />);
         await screen.findByRole("list");
@@ -306,17 +320,32 @@ describe("BlogSection", () => {
             .mockResolvedValueOnce({
                 ok: true,
                 data: mockPosts,
-                pagination: { page: 1, limit: 2, total: 6, totalPages: 3 },
+                pagination: {
+                    page: 1,
+                    limit: DEFAULT_LIMIT,
+                    total: 9,
+                    totalPages: 3,
+                },
             })
             .mockResolvedValueOnce({
                 ok: true,
                 data: mockPosts,
-                pagination: { page: 2, limit: 2, total: 6, totalPages: 3 },
+                pagination: {
+                    page: 2,
+                    limit: DEFAULT_LIMIT,
+                    total: 9,
+                    totalPages: 3,
+                },
             })
             .mockResolvedValueOnce({
                 ok: true,
                 data: mockPosts,
-                pagination: { page: 3, limit: 2, total: 6, totalPages: 3 },
+                pagination: {
+                    page: 3,
+                    limit: DEFAULT_LIMIT,
+                    total: 9,
+                    totalPages: 3,
+                },
             });
         renderWithClient(<BlogSection />);
         await screen.findByRole("list");
@@ -344,12 +373,22 @@ describe("BlogSection", () => {
             .mockResolvedValueOnce({
                 ok: true,
                 data: mockPosts,
-                pagination: { page: 1, limit: 2, total: 5, totalPages: 3 },
+                pagination: {
+                    page: 1,
+                    limit: DEFAULT_LIMIT,
+                    total: 5,
+                    totalPages: 2,
+                },
             })
             .mockResolvedValueOnce({
                 ok: true,
                 data: mockPosts,
-                pagination: { page: 2, limit: 2, total: 5, totalPages: 3 },
+                pagination: {
+                    page: 2,
+                    limit: DEFAULT_LIMIT,
+                    total: 5,
+                    totalPages: 2,
+                },
             });
         renderWithClient(<BlogSection />);
         await screen.findByRole("list");
@@ -361,7 +400,7 @@ describe("BlogSection", () => {
         expect(mockFetchBlogPosts).toHaveBeenCalledTimes(2);
         expect(mockFetchBlogPosts).toHaveBeenNthCalledWith(2, {
             page: 2,
-            limit: 2,
+            limit: DEFAULT_LIMIT,
         });
     });
 
@@ -370,17 +409,32 @@ describe("BlogSection", () => {
             .mockResolvedValueOnce({
                 ok: true,
                 data: mockPosts,
-                pagination: { page: 1, limit: 2, total: 6, totalPages: 3 },
+                pagination: {
+                    page: 1,
+                    limit: DEFAULT_LIMIT,
+                    total: 6,
+                    totalPages: 2,
+                },
             })
             .mockResolvedValueOnce({
                 ok: true,
                 data: mockPosts,
-                pagination: { page: 2, limit: 2, total: 6, totalPages: 3 },
+                pagination: {
+                    page: 2,
+                    limit: DEFAULT_LIMIT,
+                    total: 6,
+                    totalPages: 2,
+                },
             })
             .mockResolvedValueOnce({
                 ok: true,
                 data: mockPosts,
-                pagination: { page: 1, limit: 2, total: 6, totalPages: 3 },
+                pagination: {
+                    page: 1,
+                    limit: DEFAULT_LIMIT,
+                    total: 6,
+                    totalPages: 2,
+                },
             });
         renderWithClient(<BlogSection />);
         await screen.findByRole("list");
@@ -395,7 +449,7 @@ describe("BlogSection", () => {
         expect(mockFetchBlogPosts).toHaveBeenCalledTimes(3);
         expect(mockFetchBlogPosts).toHaveBeenNthCalledWith(3, {
             page: 1,
-            limit: 2,
+            limit: DEFAULT_LIMIT,
         });
     });
 
@@ -404,12 +458,22 @@ describe("BlogSection", () => {
             .mockResolvedValueOnce({
                 ok: true,
                 data: mockPosts,
-                pagination: { page: 1, limit: 2, total: 6, totalPages: 3 },
+                pagination: {
+                    page: 1,
+                    limit: DEFAULT_LIMIT,
+                    total: 6,
+                    totalPages: 2,
+                },
             })
             .mockResolvedValueOnce({
                 ok: true,
                 data: mockPosts,
-                pagination: { page: 3, limit: 2, total: 6, totalPages: 3 },
+                pagination: {
+                    page: 2,
+                    limit: DEFAULT_LIMIT,
+                    total: 6,
+                    totalPages: 2,
+                },
             });
         renderWithClient(<BlogSection />);
         await screen.findByRole("list");
@@ -419,8 +483,8 @@ describe("BlogSection", () => {
         await screen.findByRole("list");
         expect(mockFetchBlogPosts).toHaveBeenCalledTimes(2);
         expect(mockFetchBlogPosts).toHaveBeenNthCalledWith(2, {
-            page: 3,
-            limit: 2,
+            page: 2,
+            limit: DEFAULT_LIMIT,
         });
     });
 
@@ -428,7 +492,12 @@ describe("BlogSection", () => {
         mockFetchBlogPosts.mockResolvedValueOnce({
             ok: true,
             data: mockPosts,
-            pagination: { page: 1, limit: 2, total: 5, totalPages: 3 },
+            pagination: {
+                page: 1,
+                limit: DEFAULT_LIMIT,
+                total: 9,
+                totalPages: 3,
+            },
         });
         renderWithClient(<BlogSection />);
         await screen.findByRole("list");
@@ -449,7 +518,12 @@ describe("BlogSection", () => {
         mockFetchBlogPosts.mockResolvedValueOnce({
             ok: true,
             data: mockPosts,
-            pagination: { page: 1, limit: 2, total: 20, totalPages: 10 },
+            pagination: {
+                page: 1,
+                limit: DEFAULT_LIMIT,
+                total: 20,
+                totalPages: 7,
+            },
         });
         renderWithClient(<BlogSection />);
         await screen.findByRole("list");
@@ -475,12 +549,22 @@ describe("BlogSection", () => {
             .mockResolvedValueOnce({
                 ok: true,
                 data: mockPosts,
-                pagination: { page: 1, limit: 2, total: 20, totalPages: 10 },
+                pagination: {
+                    page: 1,
+                    limit: DEFAULT_LIMIT,
+                    total: 20,
+                    totalPages: 7,
+                },
             })
             .mockResolvedValueOnce({
                 ok: true,
                 data: mockPosts,
-                pagination: { page: 5, limit: 2, total: 20, totalPages: 10 },
+                pagination: {
+                    page: 5,
+                    limit: DEFAULT_LIMIT,
+                    total: 20,
+                    totalPages: 7,
+                },
             });
         renderWithClient(<BlogSection />);
         await screen.findByRole("list");
@@ -522,7 +606,12 @@ describe("BlogSection", () => {
             .mockResolvedValueOnce({
                 ok: true,
                 data: mockPosts,
-                pagination: { page: 1, limit: 2, total: 6, totalPages: 3 },
+                pagination: {
+                    page: 1,
+                    limit: DEFAULT_LIMIT,
+                    total: 9,
+                    totalPages: 3,
+                },
             })
             .mockReturnValueOnce(page2Promise);
         renderWithClient(<BlogSection />);
@@ -537,7 +626,12 @@ describe("BlogSection", () => {
         resolvePage2!({
             ok: true,
             data: mockPosts,
-            pagination: { page: 2, limit: 2, total: 6, totalPages: 3 },
+            pagination: {
+                page: 2,
+                limit: DEFAULT_LIMIT,
+                total: 9,
+                totalPages: 3,
+            },
         });
         await screen.findByRole("list");
         expect(mockFetchBlogPosts).toHaveBeenCalledTimes(2);
@@ -548,12 +642,22 @@ describe("BlogSection", () => {
             .mockResolvedValueOnce({
                 ok: true,
                 data: mockPosts,
-                pagination: { page: 1, limit: 2, total: 10, totalPages: 5 },
+                pagination: {
+                    page: 1,
+                    limit: DEFAULT_LIMIT,
+                    total: 10,
+                    totalPages: 4,
+                },
             })
             .mockResolvedValueOnce({
                 ok: true,
                 data: mockPosts,
-                pagination: { page: 3, limit: 2, total: 10, totalPages: 5 },
+                pagination: {
+                    page: 3,
+                    limit: DEFAULT_LIMIT,
+                    total: 10,
+                    totalPages: 4,
+                },
             });
         renderWithClient(<BlogSection />);
         await screen.findByRole("list");
@@ -565,7 +669,7 @@ describe("BlogSection", () => {
         expect(mockFetchBlogPosts).toHaveBeenCalledTimes(2);
         expect(mockFetchBlogPosts).toHaveBeenNthCalledWith(2, {
             page: 3,
-            limit: 2,
+            limit: DEFAULT_LIMIT,
         });
     });
 

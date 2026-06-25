@@ -7,7 +7,7 @@ const DEFAULT_TIMEOUT_MS = 10_000;
 
 /** Default page and limit for blog list requests (e.g. home section preview). */
 export const DEFAULT_PAGE = 1;
-export const DEFAULT_LIMIT = 2;
+export const DEFAULT_LIMIT = 3;
 
 /** User-facing error message for HTTP/network failures (avoids exposing raw status in UI). */
 const BLOG_LOAD_ERROR_MESSAGE = "Couldn't load posts";
@@ -76,6 +76,7 @@ export interface BlogPost {
     title: string;
     excerpt: string;
     link: string;
+    publishedAt?: string;
 }
 
 /** Detail UI type for single-post view; includes HTML content from API. */
@@ -127,6 +128,7 @@ export function mapSonicJSPostToBlogPost(raw: SonicJSPost): BlogPost {
         title: raw.title ?? "",
         excerpt: raw.excerpt ?? "",
         link: `/blog/${slugForLink}`,
+        ...(raw.publishedAt ? { publishedAt: raw.publishedAt } : {}),
     };
 }
 
@@ -148,7 +150,7 @@ export function mapSonicJSPostToBlogPostDetail(
     };
 }
 
-function fetchWithTimeout(
+async function fetchWithTimeout(
     url: string,
     options: RequestInit,
     timeoutMs: number,
