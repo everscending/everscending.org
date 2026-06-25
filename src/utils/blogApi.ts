@@ -18,28 +18,28 @@ const POST_NOT_FOUND_MESSAGE = "Post not found";
 /** User-facing error for single-post load failures (network, 5xx). */
 const POST_LOAD_ERROR_MESSAGE = "Couldn't load post";
 
-/** Host → blog API base URL (includes /api/blog). Used by getBlogApiBaseUrl. */
-const HOST_TO_BLOG_API_BASE: Record<string, string> = {
-    "localhost:5173": "http://localhost:8787/api/blog",
-    "develop.everscending-org.pages.dev":
-        "https://develop-everscending-blog.everscending.workers.dev/api/blog",
-    "everscending-org.pages.dev":
-        "https://everscending-blog.everscending.workers.dev/api/blog",
-    "everscending.org":
-        "https://everscending-blog.everscending.workers.dev/api/blog",
-    "everscending-web.everscending.workers.dev":
-        "https://everscending-blog.everscending.workers.dev/api/blog",
-    "everscending.ai":
-        "https://everscending-blog.everscending.workers.dev/api/blog",
-};
-
 /**
  * Returns the blog API base URL for the current frontend host (e.g. origin + /api/blog).
  * Uses window.location.host; returns empty string when host is unknown or not in a browser.
  */
 export function getBlogApiBaseUrl(): string {
     const host = typeof window !== "undefined" ? window.location.host : "";
-    return HOST_TO_BLOG_API_BASE[host] ?? "";
+    if (
+        [
+            "everscending.org",
+            "everscending.ai",
+            "everscending-org.pages.dev",
+        ].includes(host)
+    ) {
+        // production environment
+        return "https://everscending-blog.everscending.workers.dev/api/blog";
+    } else if (host.includes(".everscending-org.pages.dev")) {
+        // dev environment
+        return "https://develop-everscending-blog.everscending.workers.dev/api/blog";
+    } else {
+        // local environment
+        return "http://localhost:8787/api/blog";
+    }
 }
 
 // ——— Raw SonicJS API types (align with architecture) ———

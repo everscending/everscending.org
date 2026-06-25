@@ -32,7 +32,7 @@ describe("getBlogApiBaseUrl", () => {
         expect(getBlogApiBaseUrl()).toBe("http://localhost:8787/api/blog");
     });
 
-    it("returns develop URL for develop.everscending-org.pages.dev", () => {
+    it("returns develop URL for hosts under .everscending-org.pages.dev", () => {
         mockWindowLocation("develop.everscending-org.pages.dev");
         expect(getBlogApiBaseUrl()).toBe(
             "https://develop-everscending-blog.everscending.workers.dev/api/blog",
@@ -53,13 +53,6 @@ describe("getBlogApiBaseUrl", () => {
         );
     });
 
-    it("returns production URL for everscending-web.everscending.workers.dev", () => {
-        mockWindowLocation("everscending-web.everscending.workers.dev");
-        expect(getBlogApiBaseUrl()).toBe(
-            "https://everscending-blog.everscending.workers.dev/api/blog",
-        );
-    });
-
     it("returns production URL for everscending.ai", () => {
         mockWindowLocation("everscending.ai");
         expect(getBlogApiBaseUrl()).toBe(
@@ -67,9 +60,9 @@ describe("getBlogApiBaseUrl", () => {
         );
     });
 
-    it("returns empty string for unknown host", () => {
+    it("returns local dev URL for unknown host", () => {
         mockWindowLocation("unknown.example.com");
-        expect(getBlogApiBaseUrl()).toBe("");
+        expect(getBlogApiBaseUrl()).toBe("http://localhost:8787/api/blog");
     });
 
     afterEach(() => {
@@ -224,14 +217,23 @@ describe("blogApi", () => {
             });
         });
 
-        it("returns ok: false when host is unknown for blog API and does not call fetch", async () => {
+        it("falls back to local dev base for unknown host and calls fetch", async () => {
             mockWindowLocation("unknown.example.com");
-            const result = await fetchBlogPosts();
-            expect(result).toEqual({
-                ok: false,
-                error: "Unknown host for blog API",
+            (global.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
+                ok: true,
+                json: async () => ({
+                    success: true,
+                    data: [],
+                    pagination: { page: 1, limit: 10, total: 0, totalPages: 0 },
+                }),
             });
-            expect(global.fetch).not.toHaveBeenCalled();
+            await fetchBlogPosts();
+            expect(global.fetch).toHaveBeenCalledWith(
+                expect.stringMatching(
+                    /^http:\/\/localhost:8787\/api\/blog\/posts\?limit=\d+&page=1$/,
+                ),
+                expect.objectContaining({ method: "GET" }),
+            );
         });
 
         it("returns ok: false with user-facing message on network error", async () => {
