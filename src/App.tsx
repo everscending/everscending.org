@@ -14,7 +14,6 @@ import Resume from "./components/Resume";
 import AgenticTwin from "./components/AgenticTwin";
 import ResearchAgent from "./components/ResearchAgent";
 import AIEngineeringPath from "./components/AIEngineeringPath";
-import VisionDojo from "./components/VisionDojo";
 import BlogPostPage from "./components/BlogPostPage";
 import "./App.css";
 
@@ -64,7 +63,6 @@ function App() {
                         path="/ai-engineering-path"
                         element={<AIEngineeringPath />}
                     />
-                    <Route path="/vision-dojo" element={<VisionDojo />} />
                     <Route path="/blog/:slug" element={<BlogPostPage />} />
                     <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>
