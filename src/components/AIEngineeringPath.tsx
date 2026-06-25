@@ -72,6 +72,19 @@ const AIEngineeringPath = () => {
                 </li>
             </ul>
 
+            <h2>Bootcamps</h2>
+            <ul>
+                <li>
+                    <a
+                        href="https://gauntletai.com/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Gauntlet AI
+                    </a>{" "}
+                </li>
+            </ul>
+
             <h2>Online Courses</h2>
             <ul>
                 <li>
@@ -115,6 +128,16 @@ const AIEngineeringPath = () => {
                         Course
                     </a>{" "}
                     [Udemy]
+                </li>
+                <li>
+                    <a
+                        href="https://huggingface.co/learn/agents-course/unit0/introduction"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Hugging Face Agents Course
+                    </a>{" "}
+                    [Hugging Face]
                 </li>
                 <li>
                     <a
