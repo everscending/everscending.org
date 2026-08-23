@@ -38,6 +38,30 @@ const Home = () => {
                 coding workflows using Cursor/OpenCode/BMAD w/ some manual
                 coding here and there.
             </div>
+
+            <a
+                href="https://astra.everscending.ai/"
+                className="project-link"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                Astra
+            </a>
+            <div className="project-description">
+                A toy project that started years ago where I hand-coded a
+                <a
+                    target="_blank"
+                    href="https://astra.everscending.ai/stars.html"
+                >
+                    starfield simulation
+                </a>{" "}
+                leveraging my knowledge of trigonometry, before the era of
+                agentic coding. Updated with a shiny new{" "}
+                <a target="_blank" href="https://astra.everscending.ai/">
+                    version
+                </a>{" "}
+                built with Codex and Three.js.
+            </div>
         </Layout>
     );
 };
